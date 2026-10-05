@@ -297,7 +297,7 @@ def duplicate(sub_id):
 def new_subscriber():
     if request.method == "POST":
         fetch_endpoint = request.form["fetch_endpoint"].strip()
-        ack_endpoint = request.form.get("ack_endpoint", "").strip() or derive_ack(fetch_endpoint)
+        ack_endpoint = request.form["ack_endpoint"].strip()
         sub_id = str(uuid.uuid4())
         values = (
             sub_id, request.form["name"].strip(), request.form["entity_name"].strip(),
@@ -353,7 +353,7 @@ def edit_subscriber(sub_id):
                 request.form["entity_name"],
                 request.form["auth_endpoint"],
                 request.form["fetch_endpoint"],
-                request.form["fetch_endpoint"],
+                request.form["ack_endpoint"],
                 request.form["method"],
                 int(request.form["frequency_seconds"]),
                 int(request.form["batch_limit"]),
