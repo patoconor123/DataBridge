@@ -10,6 +10,7 @@
     <label>Entity/table<input name="entity_name" value="{{ sub.entity_name if sub else '' }}" required /></label>
     <label>Authentication endpoint<input name="auth_endpoint" type="url" value="{{ sub.auth_endpoint if sub else '' }}" required /></label>
     <label>Fetch endpoint<input name="fetch_endpoint" type="url" value="{{ sub.fetch_endpoint if sub else '' }}" required /></label>
+    <label>Ack endpoint<input name="ack_endpoint" type="url" value="{{ sub.ack_endpoint if sub else '' }}" required /></label>
     <div class="split">
         <label>Method<select name="method"><option>POST</option></select></label>
         <label>Batch limit<input name="batch_limit" type="number" value="{{ sub.batch_limit if sub else '' }}" min="1" required /></label>
