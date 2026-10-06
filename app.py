@@ -593,6 +593,14 @@ def flows():
         rows_data=records
     )
 
+@app.route("/flows/new")
+def flowsnew():
+
+    return render_template(
+        "flow_form.html"
+    )
+
+
 @app.route("/setup", methods=["GET", "POST"])
 def setup():
 
