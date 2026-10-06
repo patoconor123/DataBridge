@@ -23,16 +23,19 @@ body{
 .sidebar{
     width:25%;
     min-width:250px;
+    max-width:350px;
 
-    background:#18233a !important;
-    border-right:3px solid red;
-
+    background:#18233a;
     color:white;
 
-    position:fixed;
-    top:0;
-    left:0;
-    bottom:0;
+    padding:24px;
+}
+
+.content{
+    width:75%;
+    flex:1;
+
+    padding:32px;
 }
 
 .logo{
@@ -61,16 +64,16 @@ body{
     text-decoration:none;
     padding:12px 14px;
     border-radius:8px;
-    font-weight:500;
+    font-weight:600;
 }
 
 .nav-link:hover{
     background:#253654;
-    color:#ffffff !important;
+    color:white !important;
 }
 
 .nav-link:visited{
-    color:#ffffff;
+    color:white;
 }
 
 
