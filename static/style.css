@@ -22,10 +22,14 @@ body{
     width:280px;
     min-height:100vh;
 
+    position:sticky;
+    top:0;
+
     background:#18233a;
     color:white;
-
     padding:24px;
+
+    flex-shrink:0;
 }
 
 .content{
