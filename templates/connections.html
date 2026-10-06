@@ -12,9 +12,7 @@
     </div>
 
     /connections/new
-
         + Add Connection
-
     </a>
 
 </div>
@@ -34,15 +32,13 @@
             </h2>
 
             <span class="badge paused">
-
                 {{ connection.type }}
-
             </span>
 
         </div>
 
         <p>
-            {{ connection.description or 'No Description' }}
+            {{ connection.description or 'No description provided.' }}
         </p>
 
         <small>
@@ -62,14 +58,15 @@
     <h2>No Connections Found</h2>
 
     <p>
-        DataBridge has not been configured with any
-        connections yet.
+        No connections have been configured yet.
     </p>
 
-    <a
-        href="/connections/new"
-        class="button primary">
+    /connections/new
+        Create First Connection
+    </a>
 
-    endif %}
+</div>
+
+{% endif %}
 
 {% endblock %}
