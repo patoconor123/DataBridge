@@ -597,7 +597,8 @@ def flows():
 def flowsnew():
 
     return render_template(
-        "flow_form.html"
+        "flow_form.html",
+        form_values={}
     )
 
 
