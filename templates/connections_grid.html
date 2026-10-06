@@ -6,7 +6,24 @@
 
 <link rel="stylesheet"
       href="{{ url_for('static', filename='jquery.dataTables.min.css') }}">
-
+<script>
+ 
+console.log("jQuery =", typeof $);
+ 
+console.log(
+"DataTable =",
+typeof $.fn.DataTable
+);
+ 
+$(document).ready(function() {
+ 
+$('#connectionsTable').DataTable({
+pageLength: 10
+});
+ 
+});
+ 
+</script>
 <div class="panel">
 
     <table id="connectionsTable"     <th>Fetch Type</th>
