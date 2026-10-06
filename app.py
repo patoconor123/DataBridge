@@ -38,7 +38,10 @@ def is_configured():
 
 def now():
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
-
+    
+def load_config():
+    with open(CONFIG_PATH, "r") as f:
+        return json.load(f)
 
 def db():
     conn = sqlite3.connect(DB_PATH)
