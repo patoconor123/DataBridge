@@ -18,10 +18,12 @@ body{
 .app-container{
     display:flex;
     min-height:100vh;
+    align-items:stretch;
 }
 
 .sidebar{
     width:280px;
+    min-height:100vh;
 
     background:#18233a;
     color:white;
