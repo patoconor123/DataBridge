@@ -15,101 +15,39 @@
 
 <form method="post" class="panel form">
 
-    <label>
-        Connection Name
-        <input
-            type="text"
-            name="name"
-            required>
-    </label>
+    <div class="form-grid">
 
-    <div class="split">
+    <label>Connection Name</label>
+    <input type="text" name="name">
 
-        <label>
-            Fetch Type
-            <select name="fetch_type">
+    <label>Fetch Type</label>
+    <select name="fetch_type">
+        <option>REST</option>
+        <option>QUEUE</option>
+    </select>
 
-                <option value="REST">
-                    REST
-                </option>
+    <label>Fetch Method</label>
+    <select name="fetch_method">
+        <option>GET</option>
+        <option>POST</option>
+    </select>
 
-                <option value="QUEUE">
-                    Queue
-                </option>
+    <label>Endpoint</label>
+    <input type="text" name="endpoint">
 
-            </select>
-        </label>
+    <label>Authentication Endpoint</label>
+    <input type="text" name="auth_endpoint">
 
-        <label>
-            Fetch Method
-            <select name="fetch_method">
+    <label>Ack Endpoint</label>
+    <input type="text" name="ack_endpoint">
 
-                <option value="GET">
-                    GET
-                </option>
+    <label>Parameters (JSON)</label>
+    <textarea rows="5" name="params"></textarea>
 
-                <option value="POST">
-                    POST
-                </option>
+    <label>Request Body (JSON)</label>
+    <textarea rows="5" name="body"></textarea>
 
-            </select>
-        </label>
-
-    </div>
-
-    <div class="split">
-
-        <label>
-            Load Type
-            <select name="load_type">
-
-                <option value="FULL">
-                    Full
-                </option>
-
-                <option value="DELTA">
-                    Delta
-                </option>
-
-            </select>
-        </label>
-
-        <label>
-            Endpoint
-            <input
-                type="text"
-                name="endpoint">
-        </label>
-
-    </div>
-
-    <label>
-        Authentication Endpoint
-        <input
-            type="text"
-            name="auth_endpoint">
-    </label>
-
-    <label>
-        Ack Endpoint
-        <input
-            type="text"
-            name="ack_endpoint">
-    </label>
-
-    <label>
-        Parameters (JSON)
-        <textarea
-            name="params"
-            rows="6"></textarea>
-    </label>
-
-    <label>
-        Request Body (JSON)
-        <textarea
-            name="body"
-            rows="6"></textarea>
-    </label>
+</div>
 
     <div class="actions">
 
