@@ -10,7 +10,7 @@
 </div>
 
 <script>
-    const rowData = JSON.parse(`{{ rows | safe }}`);
+    const rowData = {{ rows | tojson | safe }};
 
     const gridOptions = {
         columnDefs: [
