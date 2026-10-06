@@ -3,23 +3,22 @@
 {% block content %}
 
 <h1>Connections Test</h1>
-<link rel="stylesheet"
-href="{{ url_for('static', filename='jquery.dataTables.min.css') }}
-<script src="{{ url_for('static',filename='jquery.dataTables.min.js') }}"</script>
-<table>
 
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='jquery.dataTables.min.css') }}">
+
+<script src="{{ url_for('static', filename='jquery.dataTables.min.js') }}"></script>
+
+<table>
     <tr>
         <th>Name</th>
     </tr>
 
     {% for row in rows_data %}
-
     <tr>
         <td>{{ row.name }}</td>
     </tr>
-
     {% endfor %}
-
 </table>
 
 {% endblock %}
