@@ -26,14 +26,27 @@
         <option>QUEUE</option>
     </select>
 
-    <label>Fetch Method</label>
-    <select name="fetch_method">
-        <option>GET</option>
-        <option>POST</option>
-    </select>
+    <label>Authentication Method</label>
 
-    <label>Endpoint</label>
-    <input type="text" name="endpoint">
+<select name="auth_method">
+
+    <option
+        value="POST"
+        {% if form_values.get('auth_method', 'POST') == 'POST' %}
+        selected
+        {% endif %}>
+        POST
+    </option>
+
+    <option
+        value="GET"
+        {% if form_values.get('auth_method') == 'GET' %}
+        selected
+        {% endif %}>
+        GET
+    </option>
+
+</select>
 
     <label>Authentication Endpoint</label>
     <input type="text" name="auth_endpoint">
@@ -46,29 +59,55 @@
 
     <label>Request Body (JSON)</label>
     <textarea rows="5" name="body"></textarea>
+<label>Connection Verified</label>
+
+<div class="verification-field">
+    <input
+        type="checkbox"
+        tabindex="-1"
+        onclick="return false;"
+        {% if connection_verified %}checked{% endif %}>
+
+    {% if connection_verified %}
+        <span class="verified-text">Verified</span>
+    {% else %}
+        <span class="unverified-text">Not verified</span>
+    {% endif %}
+</div>
+
+{% if connection_message %}
+
+<div class="{% if connection_verified %}
+                connection-result connection-success
+            {% else %}
+                connection-result connection-failure
+            {% endif %}">
+
+    <strong>Connection Test Results</strong>
+
+    <pre>{{ connection_message }}</pre>
 
 </div>
 
+{% endif %}
     <div class="actions">
 
+        <div class="form-actions">
+ 
         <button
-            type="submit"
-            name="action"
-            value="test"
-            class="button">
-
-            Test Connection
-
+        type="submit"
+        name="action"
+        value="test"
+        class="button">
+        Test Connection                                                                                                                
         </button>
-
+         
         <button
-            type="submit"
-            name="action"
-            value="save"
-            class="button primary">
-
-            Save Connection
-
+        type="submit"
+        name="action"
+        value="save"
+        class="button primary">
+        Save Connection
         </button>
 
     </div>
