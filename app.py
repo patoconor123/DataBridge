@@ -342,23 +342,18 @@ def duplicate(sub_id):
 
 @app.route("/setup", methods=["GET", "POST"])
 def setup():
-
+    connection_status = None
     if request.method == "POST":
-
-        config = {
-            "mongo_host": request.form["mongo_host"],
-            "mongo_port": int(request.form["mongo_port"]),
-            "mongo_database": request.form["mongo_database"],
-            "use_auth": request.form.get("use_auth") == "on",
-            "mongo_username": request.form.get("mongo_username", ""),
-            "mongo_password": request.form.get("mongo_password", "")
-        }
-
-        with open(CONFIG_PATH, "w") as f:
-            json.dump(config, f, indent=2)
-
-        return redirect(url_for("index"))
-
+        action = request.form.get("action")
+        if action == "test":
+            success, message = test_mongo_connection(...)
+            return render_template(
+                "settings.html",
+                connection_status=message
+            )
+        elif action == "save":
+            save_config(...)
+            return redirect(url_for("index"))
     return render_template("settings.html")
 
 
