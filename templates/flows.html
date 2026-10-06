@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="title">
+
+    <div>
+        <h1>Flows</h1>
+        <p>
+            Configure reusable source and destination connections.
+        </p>
+    </div>
+
+    <a href="/flows/new"
+        class="button primary">
+        + Add
+    </a>
+
+</div>
+
+{% if flows %}
+
+<div class="grid">
+
+    {% for flow in flows %}
+
+    <div class="card">
+
+        <div class="row">
+
+            <h2>
+                {{ flow.name }}
+            </h2>
+
+            <span class="badge paused">
+                {{ flow.type }}
+            </span>
+
+        </div>
+
+        <p>
+            {{ flow.description }}
+        </p>
+
+        <small>
+            {{ flow.destination }}
+        </small>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="panel">
+
+    <h2>No Connections Found</h2>
+
+    <p>
+        No connections have been configured yet.
+    </p>
+
+    /connections/new
+        Create First Connection
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}
