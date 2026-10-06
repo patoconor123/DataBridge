@@ -857,9 +857,9 @@ def connections_grid():
         records.append(doc)
 
     return render_template(
-        "connections_grid.html",
-        rows=json.dumps(records, default=str)
-    )
+    "connections_grid.html",
+    rows_data=records
+)
 @app.route("/subscriber/<sub_id>")
 def subscriber_detail(sub_id):
     sub = get_subscriber(sub_id)
