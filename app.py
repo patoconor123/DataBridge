@@ -579,6 +579,19 @@ def duplicate(sub_id):
         )
     )
 
+@app.route("/flows")
+def flows():
+    db = get_mongo_database()
+    if "flows" not in db.list_collection_names():
+        db.create_collection("flows")
+    records = []
+    for doc in db.flows.find():
+        doc["_id"] = str(doc["_id"])
+        records.append(doc)
+    return render_template(
+        "flows.html",
+        rows_data=records
+    )
 
 @app.route("/setup", methods=["GET", "POST"])
 def setup():
