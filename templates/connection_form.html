@@ -18,19 +18,36 @@
     <div class="form-grid">
 
     <label>Connection Name</label>
-    <input type="text" name="name">
+    <input type="text" name="connection_name"
+    value="{{ form_values.get('connection_name', '') }}">
 
-    <label>Fetch Type</label>
+        
+<label>Fetch Type</label>
     <select name="fetch_type">
-        <option>REST</option>
-        <option>QUEUE</option>
+
+    <option>
+        value="REST"
+        {% if form_values.get('fetch_type', 'REST') == 'REST' %}
+        selected
+        {% endif %}>
+        REST
+    </option>
+
+    <option>
+        value="QUEUE"
+        {% if form_values.get('fetch_type') == 'QUEUE' %}
+        selected
+        {% endif %}>
+        Queue
+    </option>
+
     </select>
 
     <label>Authentication Method</label>
 
 <select name="auth_method">
 
-    <option
+    <option>
         value="POST"
         {% if form_values.get('auth_method', 'POST') == 'POST' %}
         selected
@@ -38,7 +55,7 @@
         POST
     </option>
 
-    <option
+    <option>
         value="GET"
         {% if form_values.get('auth_method') == 'GET' %}
         selected
@@ -49,17 +66,22 @@
 </select>
 
     <label>Authentication Endpoint</label>
-    <input type="text" name="auth_endpoint">
+    <input type="text" name="auth_endpoint"
+    value="{{ form_values.get('auth_endpoint', '') }}">
 
     <label>Ack Endpoint</label>
-    <input type="text" name="ack_endpoint">
+    <input type="text" name="ack_endpoint"
+    value="{{ form_values.get('ack_endpoint', '') }}">
 
     <label>Parameters (JSON)</label>
-    <textarea rows="5" name="params"></textarea>
+    <textarea  rows="5"    name="params">
+        {{ form_values.get('params', '') }}
+    </textarea>
 
     <label>Request Body (JSON)</label>
-    <textarea rows="5" name="body"></textarea>
-<label>Connection Verified</label>
+    <textarea  rows="5" name="body">
+        {{ form_values.get('body', '') }}
+    </textarea>
 
 <div class="verification-field">
     <input
