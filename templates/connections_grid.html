@@ -2,63 +2,22 @@
 
 {% block content %}
 
-<h1>Connections</h1>
+<h1>Connections Test</h1>
 
-<link rel="stylesheet"
-      href="{{ url_for('static', filename='jquery.dataTables.min.css') }}">
+<table>
 
-<div class="panel">
+    <tr>
+        <th>Name</th>
+    </tr>
 
-    <table id="connectionsTable" class="display">
-             <th>Name</th>
-                <th>Fetch Type</th>
-                <th>Method</th>
-                <th>Verified</th>
-            </tr>
-        </thead>
+    {% for row in rows_data %}
 
-        <tbody>
+    <tr>
+        <td>{{ row.name }}</td>
+    </tr>
 
-        {% for row in rows_data %}
+    {% endfor %}
 
-            <tr>
-                <td>{{ row.name }}</td>
-                <td>{{ row.fetch_type }}</td>
-                <td>{{ row.fetch_method }}</td>
-                <td>{{ row.verified }}</td>
-            </tr>
-
-        {% endfor %}
-
-        </tbody>
-
-    </table>
-
-</div>
-
-
-<script>
-
-console.log("jQuery:", typeof $);
-if (typeof $ !== "undefined") {
-console.log(
-"DataTable =",
-typeof $.fn.DataTable
-);
-}
-$(document).ready(function() {
-
-    console.log("DataTables initialized");
-
-    $('#connectionsTable').DataTable({
-        pageLength: 10,
-        searching: true,
-        paging: true,
-        ordering: true
-    });
-
-});
-
-</script>
+</table>
 
 {% endblock %}
