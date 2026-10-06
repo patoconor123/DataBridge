@@ -5,11 +5,12 @@
 <h1>Connections Grid Test</h1>
 
 <link rel="stylesheet"
-      href="https://app.unpkg.com/@ag-grid-community/styles@28.1.0/files/ag-grid.css">
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/ag-grid/36.2.0/ag-grid-community.min.js">
-
-<script>
+href="{{ url_for('static', filename='ag-grid.css') }}">
+ 
+<link rel="stylesheet"
+href="{{ url_for('static', filename='ag-theme-alpine.css') }}">
+ 
+<script src="{{ url_for('static', filename='ag-theme-alpine.css') }}">
 
 const rowData = {{ rows|safe }};
 
