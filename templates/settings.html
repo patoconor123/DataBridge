@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="title">
+    <div>
+        <h1>Welcome to DataBridge</h1>
+        <p>
+            Configure a MongoDB connection to initialize the
+            DataBridge platform.
+        </p>
+    </div>
+</div>
+
+<div class="panel form">
+
+    <h2>MongoDB Connection</h2>
+
+    <form method="post">
+
+        <label>
+            Mongo Host
+            <input
+                type="text"
+                name="mongo_host"
+                placeholder="awsohcentricq01.underarmour.com"
+                required>
+        </label>
+
+        <label>
+            Mongo Port
+            <input
+                type="number"
+                name="mongo_port"
+                value="27017"
+                required>
+        </label>
+
+        <label>
+            Database Name
+            <input
+                type="text"
+                name="mongo_database"
+                value="databridge"
+                required>
+        </label>
+
+        <label>
+            Username
+            <input
+                type="text"
+                name="mongo_username">
+        </label>
+
+        <label>
+            Password
+            <input
+                type="password"
+                name="mongo_password">
+        </label>
+
+        <div class="actions">
+
+            <button
+                type="submit"
+                name="action"
+                value="test"
+                class="button">
+                Test Connection
+            </button>
+
+            <button
+                type="submit"
+                name="action"
+                value="save"
+                class="button primary">
+                Save Connection
+            </button>
+
+        </div>
+
+    </form>
+
+    {% if connection_status %}
+    <div class="status-card">
+        <strong>Status:</strong>
+        {{ connection_status }}
+    </div>
+    {% endif %}
+
+</div>
+
+{% endblock %}
