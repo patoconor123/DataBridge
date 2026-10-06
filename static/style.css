@@ -21,9 +21,7 @@ body{
 }
 
 .sidebar{
-    width:25%;
-    min-width:250px;
-    max-width:350px;
+    width:280px;
 
     background:#18233a;
     color:white;
@@ -32,7 +30,6 @@ body{
 }
 
 .content{
-    width:75%;
     flex:1;
 
     padding:32px;
