@@ -24,7 +24,17 @@ log_buffers = {}
 locks = {}
 
 def is_configured():
-    return CONFIG_PATH.exists()
+    if not CONFIG_PATH.exists():
+        return False
+    try:
+        with open(CONFIG_PATH, "r") as f:
+            config = json.load(f)
+        return bool(
+            config.get("mongo_host")
+            and config.get("mongo_database")
+        )
+    except Exception:
+        return False
 
 def now():
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -82,6 +92,20 @@ def update_status(sub_id, status):
     with db() as conn:
         conn.execute("UPDATE subscribers SET status = ? WHERE id = ?", (status, sub_id))
 
+def save_config(form):
+ 
+config = {
+"mongo_host": form["mongo_host"],
+"mongo_port": int(form["mongo_port"]),
+"mongo_database": form["mongo_database"],
+"mongo_username": form["mongo_username"],
+"mongo_password": form["mongo_password"],
+"mongo_auth_database": form["mongo_auth_database"]
+}
+ 
+with open(CONFIG_PATH, "w") as f:
+json.dump(config, f, indent=4)
+print(f"Config saved to {CONFIG_PATH}")
 
 def get_mongo_client(config):
 
@@ -346,13 +370,22 @@ def setup():
     if request.method == "POST":
         action = request.form.get("action")
         if action == "test":
-            success, message = test_mongo_connection(...)
-            return render_template(
-                "settings.html",
-                connection_status=message
-            )
+ 
+        success, message = test_mongo_connection(...)
+         
+        return render_template(
+        "settings.html",
+        connection_verified=success,
+        connection_message=message,
+        mongo_host=request.form["mongo_host"],
+        mongo_port=request.form["mongo_port"],
+        mongo_database=request.form["mongo_database"],
+        mongo_username=request.form["mongo_username"],
+        mongo_password=request.form["mongo_password"],
+        mongo_auth_database=request.form["mongo_auth_database"]
+        )
         elif action == "save":
-            save_config(...)
+            save_config(request.form)
             return redirect(url_for("index"))
     return render_template("settings.html")
 
