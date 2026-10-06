@@ -451,6 +451,28 @@ def setup():
         connection_verified=False
     )
 
+@app.route("/connections")
+def connections():
+
+    config = load_config()
+
+    client = get_mongo_client(config)
+
+    db = client[config["mongo_database"]]
+
+    # Create collection if it doesn't exist
+    if "connections" not in db.list_collection_names():
+        db.create_collection("connections")
+
+    connections = list(
+        db.connections.find().sort("name", 1)
+    )
+
+    return render_template(
+        "connections.html",
+        connections=connections
+    )
+
 @app.before_request
 def require_setup():
 
