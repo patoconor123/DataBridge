@@ -365,27 +365,44 @@ def duplicate(sub_id):
 
 @app.route("/setup", methods=["GET", "POST"])
 def setup():
-    connection_status = None
-    if request.method == "POST":
-        action = request.form.get("action")
-        if action == "test":
-        success, message = test_mongo_connection(...)
-        return render_template(
-        "settings.html",
-        connection_verified=success,
-        connection_message=message,
-        mongo_host=request.form["mongo_host"],
-        mongo_port=request.form["mongo_port"],
-        mongo_database=request.form["mongo_database"],
-        mongo_username=request.form["mongo_username"],
-        mongo_password=request.form["mongo_password"],
-        mongo_auth_database=request.form["mongo_auth_database"]
-        )
-        elif action == "save":
-            save_config(request.form)
-            return redirect(url_for("index"))
-    return render_template("settings.html")
 
+    if request.method == "POST":
+
+        action = request.form.get("action")
+
+        if action == "test":
+
+            success, message = test_mongo_connection(
+                request.form["mongo_host"],
+                request.form["mongo_port"],
+                request.form["mongo_database"],
+                request.form["mongo_username"],
+                request.form["mongo_password"],
+                request.form["mongo_auth_database"]
+            )
+
+            return render_template(
+                "settings.html",
+                connection_verified=success,
+                connection_message=message,
+                mongo_host=request.form["mongo_host"],
+                mongo_port=request.form["mongo_port"],
+                mongo_database=request.form["mongo_database"],
+                mongo_username=request.form["mongo_username"],
+                mongo_password=request.form["mongo_password"],
+                mongo_auth_database=request.form["mongo_auth_database"]
+            )
+
+        elif action == "save":
+
+            save_config(request.form)
+
+            return redirect(url_for("index"))
+
+    return render_template(
+        "settings.html",
+        connection_verified=False
+    )
 
 @app.before_request
 def require_setup():
