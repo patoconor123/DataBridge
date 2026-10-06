@@ -848,18 +848,18 @@ def connections_grid():
 
     db = get_mongo_database()
 
-    rows = list(
-        db.connections.find(
-            {},
-            {"_id": 0}
-        )
-    )
+    records = []
+
+    for doc in db.connections.find():
+
+        doc["_id"] = str(doc["_id"])
+
+        records.append(doc)
 
     return render_template(
         "connections_grid.html",
-        rows=json.dumps(rows, default=str)
+        rows=json.dumps(records, default=str)
     )
-
 @app.route("/subscriber/<sub_id>")
 def subscriber_detail(sub_id):
     sub = get_subscriber(sub_id)
