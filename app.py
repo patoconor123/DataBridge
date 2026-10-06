@@ -472,6 +472,17 @@ def connections():
         "connections.html",
         connections=connections
     )
+@app.route("/connections/new", methods=["GET", "POST"])
+def new_connection():
+
+    if request.method == "POST":
+
+        # We'll save later
+        print(dict(request.form))
+
+        return redirect(url_for("connections"))
+
+    return render_template("connection_form.html")
 
 @app.before_request
 def require_setup():
