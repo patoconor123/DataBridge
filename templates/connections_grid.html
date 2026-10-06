@@ -2,15 +2,25 @@
 
 {% block content %}
 
-<h1>Connections</h1>
+<div class="title">
 
-<div
-    id="myGrid"
-    class="ag-theme-alpine"
+    <div>
+        <h1>Connections</h1>
+        <p>
+            Browse all DataBridge connections.
+        </p>
+    </div>
+
+</div>
+
+<link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/ag-grid-community/styleset"
+    href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine   class="ag-theme-alpine"
     style="height:700px;width:100%;">
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/ag-grid-t/ag-grid-community.min.jsscript>
+<script src="https://cdn.jsdelivr.net/npm/ag-grid-community-community.min.jsscript>
 
 <script>
 
@@ -18,11 +28,35 @@ const rowData = {{ rows|safe }};
 
 const columnDefs = [
 
-    { field: "name", filter: true },
-    { field: "fetch_type", filter: true },
-    { field: "fetch_method", filter: true },
-    { field: "verified", filter: true },
-    { field: "created_at", filter: true }
+    {
+        field: "_id",
+        hide: true
+    },
+
+    {
+        field: "name",
+        headerName: "Connection Name"
+    },
+
+    {
+        field: "fetch_type",
+        headerName: "Fetch Type"
+    },
+
+    {
+        field: "fetch_method",
+        headerName: "Method"
+    },
+
+    {
+        field: "verified",
+        headerName: "Verified"
+    },
+
+    {
+        field: "created_at",
+        headerName: "Created"
+    }
 
 ];
 
@@ -31,6 +65,8 @@ const gridOptions = {
     columnDefs: columnDefs,
 
     rowData: rowData,
+
+    animateRows: true,
 
     pagination: true,
 
@@ -45,7 +81,7 @@ const gridOptions = {
 };
 
 new agGrid.Grid(
-    document.getElementById("myGrid"),
+    document.getElementById("connectionsGrid"),
     gridOptions
 );
 
