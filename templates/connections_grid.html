@@ -1,41 +1,71 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Connections Grid Test</h1>
 
-<div
-    id="myGrid"
-    class="ag-theme-alpine"
-    style="height:600px;width:100%;">
+<h1>Connections</h1>
+
+<link rel="stylesheet"
+      href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+
+<div class="panel">
+
+    <table id="connectionsTable" class="display">
+
+        <thead>
+            <tr           <th>Fetch Type</th>
+                <th>Method</th>
+                <th>Verified</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+        {% for row in rows_data %}
+
+            <tr>
+
+                <td>{{ row.name }}</td>
+
+                <td>{{ row.fetch_type }}</td>
+
+                <td>{{ row.fetch_method }}</td>
+
+                <td>{{ row.verified }}</td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
 </div>
 
+<script src="jquery.com/jquery-3.7.1.min.jsscript>
+
+<script src="https://cdn.datatables.net/1.13.8taTables.min.jsscript>
+
 <script>
-    const rowData = {{ rows | tojson | safe }};
 
-    const gridOptions = {
-        columnDefs: [
-            { field: "name" },
-            { field: "fetch_type" },
-            { field: "fetch_method" },
-            { field: "verified" }
-        ],
-        rowData: rowData,
-        defaultColDef: {
-            sortable: true,
-            filter: true,
-            resizable: true
-        },
-        pagination: true
-    };
+$(document).ready(function () {
 
-    document.addEventListener("DOMContentLoaded", function () {
-    if (typeof agGrid === 'undefined') {
-        console.error("AG Grid library not loaded!");
-        return;
-    }
-    const gridDiv = document.querySelector("#myGrid");
-    new agGrid.Grid(gridDiv, gridOptions);
+    $('#connectionsTable').DataTable({
+
+        pageLength: 10,
+
+        order: [[0, 'asc']],
+
+        searching: true,
+
+        paging: true,
+
+        info: true
+
+    });
+
 });
 
 </script>
+
 {% endblock %}
