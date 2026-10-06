@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="title">
+
+    <div>
+        <h1>Connections</h1>
+        <p>
+            Configure reusable source and destination connections.
+        </p>
+    </div>
+
+    /connections/new
+
+        + Add Connection
+
+    </a>
+
+</div>
+
+{% if connections %}
+
+<div class="grid">
+
+    {% for connection in connections %}
+
+    <div class="card">
+
+        <div class="row">
+
+            <h2>
+                {{ connection.name }}
+            </h2>
+
+            <span class="badge paused">
+
+                {{ connection.type }}
+
+            </span>
+
+        </div>
+
+        <p>
+            {{ connection.description or 'No Description' }}
+        </p>
+
+        <small>
+            {{ connection.endpoint or '' }}
+        </small>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="panel">
+
+    <h2>No Connections Found</h2>
+
+    <p>
+        DataBridge has not been configured with any
+        connections yet.
+    </p>
+
+    <a
+        href="/connections/new"
+        class="button primary">
+
+    endif %}
+
+{% endblock %}
