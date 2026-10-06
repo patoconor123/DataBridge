@@ -48,6 +48,156 @@ def db():
     conn.row_factory = sqlite3.Row
     return conn
 
+def parse_json_field(raw_value, field_name):
+    raw_value = (raw_value or "").strip()
+
+    if not raw_value:
+        return {}
+
+    try:
+        parsed_value = json.loads(raw_value)
+    except json.JSONDecodeError as exc:
+        raise ValueError(
+            f"{field_name} contains invalid JSON: {exc.msg}"
+        ) from exc
+
+    if not isinstance(parsed_value, dict):
+        raise ValueError(
+            f"{field_name} must contain a JSON object."
+        )
+
+    return parsed_value
+
+def get_connection_form_values(form):
+    return {
+        "name": form.get("name", "").strip(),
+        "fetch_type": form.get("fetch_type", "REST"),
+        "fetch_method": form.get("fetch_method", "GET"),
+        "auth_method": form.get("auth_method", "POST"),
+        "auth_endpoint": form.get("auth_endpoint", "").strip(),
+        "ack_endpoint": form.get("ack_endpoint", "").strip(),
+        "params": form.get("params", ""),
+        "body": form.get("body", "")
+    }
+def test_rest_connection(form):
+    auth_endpoint = form.get("auth_endpoint", "").strip()
+    auth_method = form.get("auth_method", "POST").upper().strip()
+
+    if not auth_endpoint:
+        return False, "Authentication Endpoint is required."
+
+    try:
+        params = parse_json_field(
+            form.get("params"),
+            "Parameters"
+        )
+
+        body = parse_json_field(
+            form.get("body"),
+            "Request Body"
+        )
+
+        headers = {
+            "Accept": "application/json"
+        }
+
+        if auth_method == "GET":
+            response = requests.get(
+                auth_endpoint,
+                params=params,
+                headers=headers,
+                timeout=60
+            )
+
+        elif auth_method == "POST":
+            response = requests.post(
+                auth_endpoint,
+                params=params,
+                json=body,
+                headers=headers,
+                timeout=60
+            )
+
+        else:
+            return (
+                False,
+                f"Unsupported authentication method: {auth_method}"
+            )
+
+        if response.status_code != 201:
+            return (
+                False,
+                "Authentication failed.\n"
+                f"HTTP Status: {response.status_code}\n"
+                f"Response: {response.text[:1000]}"
+            )
+
+        try:
+            response_data = response.json()
+        except ValueError:
+            return (
+                False,
+                "Authentication returned HTTP 201, "
+                "but the response was not valid JSON."
+            )
+
+        token = None
+
+        if isinstance(response_data, str):
+            token = response_data
+
+        elif isinstance(response_data, dict):
+            token = (
+                response_data.get("token")
+                or response_data.get("access_token")
+                or response_data.get("accessToken")
+            )
+
+        if not token:
+            return (
+                False,
+                "Authentication returned HTTP 201, "
+                "but no token was found in the response."
+            )
+
+        return (
+            True,
+            "Connection successful.\n"
+            "HTTP Status: 201 Created\n"
+            "Authentication token received."
+        )
+
+    except ValueError as exc:
+        return False, str(exc)
+
+    except requests.Timeout:
+        return False, "Authentication request timed out."
+
+    except requests.RequestException as exc:
+        return False, f"REST connection failed: {exc}"
+
+def get_mongo_database():
+    config = load_config()
+
+    client_options = {
+        "host": config["mongo_host"],
+        "port": int(config["mongo_port"]),
+        "serverSelectionTimeoutMS": 5000
+    }
+
+    username = config.get("mongo_username", "").strip()
+    password = config.get("mongo_password", "")
+    auth_database = config.get("mongo_auth_database", "").strip()
+
+    if username:
+        client_options["username"] = username
+        client_options["password"] = password
+        client_options["authSource"] = auth_database or "admin"
+
+    client = MongoClient(**client_options)
+    client.admin.command("ping")
+
+    return client[config["mongo_database"]]
 
 def init_db():
     with db() as conn:
@@ -410,6 +560,7 @@ def duplicate(sub_id):
         )
     )
 
+
 @app.route("/setup", methods=["GET", "POST"])
 def setup():
 
@@ -474,15 +625,117 @@ def connections():
     )
 @app.route("/connections/new", methods=["GET", "POST"])
 def new_connection():
+    if request.method == "GET":
+        return render_template(
+            "connection_form.html",
+            connection_verified=False,
+            connection_message=None,
+            form_values={}
+        )
 
-    if request.method == "POST":
+    action = request.form.get("action")
+    form_values = get_connection_form_values(request.form)
 
-        # We'll save later
-        print(dict(request.form))
+    if action == "test":
+        success, message = test_rest_connection(request.form)
 
-        return redirect(url_for("connections"))
+        return render_template(
+            "connection_form.html",
+            connection_verified=success,
+            connection_message=message,
+            form_values=form_values
+        )
 
-    return render_template("connection_form.html")
+    if action == "save":
+        success, message = test_rest_connection(request.form)
+
+        if not success:
+            return render_template(
+                "connection_form.html",
+                connection_verified=False,
+                connection_message=(
+                    "Connection was not saved.\n\n" + message
+                ),
+                form_values=form_values
+            )
+
+        try:
+            params = parse_json_field(
+                request.form.get("params"),
+                "Parameters"
+            )
+
+            body = parse_json_field(
+                request.form.get("body"),
+                "Request Body"
+            )
+
+            database = get_mongo_database()
+            connections_collection = database["connections"]
+
+            existing_connection = connections_collection.find_one(
+                {"name": form_values["name"]}
+            )
+
+            if existing_connection:
+                return render_template(
+                    "connection_form.html",
+                    connection_verified=True,
+                    connection_message=(
+                        "Connection verified, but a connection "
+                        "with this name already exists."
+                    ),
+                    form_values=form_values
+                )
+
+            current_time = datetime.now(timezone.utc)
+
+            connection_document = {
+                "name": form_values["name"],
+                "connection_type": "FETCH",
+                "fetch_type": form_values["fetch_type"],
+                "fetch_method": form_values["fetch_method"],
+                "authentication": {
+                    "method": form_values["auth_method"],
+                    "endpoint": form_values["auth_endpoint"],
+                    "params": params,
+                    "body": body
+                },
+                "ack_endpoint": form_values["ack_endpoint"],
+                "verified": True,
+                "verified_at": current_time,
+                "created_at": current_time,
+                "updated_at": current_time
+            }
+
+            connections_collection.insert_one(
+                connection_document
+            )
+
+            flash(
+                f'Connection "{form_values["name"]}" saved successfully.',
+                "success"
+            )
+
+            return redirect(url_for("connections"))
+
+        except Exception as exc:
+            return render_template(
+                "connection_form.html",
+                connection_verified=True,
+                connection_message=(
+                    "Connection verified, but saving failed.\n"
+                    f"{exc}"
+                ),
+                form_values=form_values
+            )
+
+    return render_template(
+        "connection_form.html",
+        connection_verified=False,
+        connection_message="Unknown form action.",
+        form_values=form_values
+    )
 
 @app.before_request
 def require_setup():
