@@ -25,7 +25,7 @@
 <label>Fetch Type</label>
     <select name="fetch_type">
 
-    <option>
+    <option
         value="REST"
         {% if form_values.get('fetch_type', 'REST') == 'REST' %}
         selected
@@ -33,7 +33,7 @@
         REST
     </option>
 
-    <option>
+    <option
         value="QUEUE"
         {% if form_values.get('fetch_type') == 'QUEUE' %}
         selected
@@ -47,7 +47,7 @@
 
 <select name="auth_method">
 
-    <option>
+    <option
         value="POST"
         {% if form_values.get('auth_method', 'POST') == 'POST' %}
         selected
@@ -55,7 +55,7 @@
         POST
     </option>
 
-    <option>
+    <option
         value="GET"
         {% if form_values.get('auth_method') == 'GET' %}
         selected
