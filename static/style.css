@@ -56,26 +56,17 @@ body{
     flex-shrink:0;
 }
 
-.data-table{
-    width:100%;
-    border-collapse:collapse;
+table.dataTable {
+    width:100% !important;
 }
 
-.data-table th{
-    text-align:left;
-    padding:12px;
-    background:#f3f5f7;
+.dataTables_filter {
+    margin-bottom:15px;
 }
 
-.data-table td{
-    padding:12px;
-    border-top:1px solid #dde2ea;
+.dataTables_length {
+    margin-bottom:15px;
 }
-
-.data-table tr:hover{
-    background:#f9fafb;
-}
-
 .form-grid{
 display:grid;
 grid-template-columns:220px 1fr;
