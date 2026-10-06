@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Connections</h1>
+
+<div
+    id="myGrid"
+    class="ag-theme-alpine"
+    style="height:700px;width:100%;">
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/ag-grid-t/ag-grid-community.min.jsscript>
+
+<script>
+
+const rowData = {{ rows|safe }};
+
+const columnDefs = [
+
+    { field: "name", filter: true },
+    { field: "fetch_type", filter: true },
+    { field: "fetch_method", filter: true },
+    { field: "verified", filter: true },
+    { field: "created_at", filter: true }
+
+];
+
+const gridOptions = {
+
+    columnDefs: columnDefs,
+
+    rowData: rowData,
+
+    pagination: true,
+
+    paginationPageSize: 20,
+
+    defaultColDef: {
+        sortable: true,
+        filter: true,
+        resizable: true
+    }
+
+};
+
+new agGrid.Grid(
+    document.getElementById("myGrid"),
+    gridOptions
+);
+
+</script>
+
+{% endblock %}
