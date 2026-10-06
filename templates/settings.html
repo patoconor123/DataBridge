@@ -6,77 +6,123 @@
     <div>
         <h1>Welcome to DataBridge</h1>
         <p>
-            Configure a MongoDB connection to initialize the
-            DataBridge platform.
+            Configure the MongoDB connection used by DataBridge.
         </p>
     </div>
 </div>
 
-<div class="panel form">
+<form method="post" class="panel form">
 
     <h2>MongoDB Configuration</h2>
 
-    <form method="post">
+    <label>
+        Mongo Host
+        <input
+            type="text"
+            name="mongo_host"
+            value="{{ mongo_host if mongo_host else '' }}"
+            placeholder="awsohcentricq01.underarmour.com"
+            required>
+    </label>
+
+    <div class="split">
 
         <label>
-            Mongo Host
+            Mongo Port
             <input
-                type="text"
-                name="mongo_host"
-                value="{{ config.mongo_host if config else '' }}"
-                placeholder="awsohcentricq01.underarmour.com"
+                type="number"
+                name="mongo_port"
+                value="{{ mongo_port if mongo_port else '27017' }}"
                 required>
         </label>
 
-        <div class="split">
-
-            <label>
-                Mongo Port
-                <input
-                    type="number"
-                    name="mongo_port"
-                    value="{{ config.mongo_port if config else '27017' }}"
-                    required>
-            </label>
-
-            <label>
-                Database Name
-                <input
-                    type="text"
-                    name="mongo_database"
-                    value="{{ config.mongo_database if config else 'databridge' }}"
-                    required>
-            </label>
-
-        </div>
-
-        <hr>
-
-        <h3>Authentication (Optional)</h3>
-
-        <div class="split">
-
-            <label>
-                Username
-                <input
-                    type="text"
-                    name="mongo_username"
-                    value="{{ config.mongo_username if config else '' }}">
-            </label>
-
-            <label>
-                Password
-                <input
-                    type="password"
-                    name="mongo_password"
-                    value="{{ config.mongo_password if config else '' }}">
-            </label>
-
-        </div>
-
         <label>
-            Authentication Database
+            Database
             <input
                 type="text"
-                name="mongo_auth_database"
-                value="{{ config.mongo_auth_database if config
+                name="mongo_database"
+                value="{{ mongo_database if mongo_database else 'databridge' }}"
+                required>
+        </label>
+
+    </div>
+
+    <hr>
+
+    <h2>Authentication</h2>
+
+    <div class="split">
+
+        <label>
+            Username
+            <input
+                type="text"
+                name="mongo_username"
+                value="{{ mongo_username if mongo_username else '' }}">
+        </label>
+
+        <label>
+            Password
+            <input
+                type="password"
+                name="mongo_password"
+                value="{{ mongo_password if mongo_password else '' }}">
+        </label>
+
+    </div>
+
+    <label>
+        Authentication Database
+        <input
+            type="text"
+            name="mongo_auth_database"
+            value="{{ mongo_auth_database if mongo_auth_database else 'admin' }}">
+    </label>
+
+    <hr>
+
+    <h2>Connection Status</h2>
+
+    <label>
+        <input
+            type="checkbox"
+            {% if connection_verified %}checked{% endif %}
+            disabled>
+
+        Connection Verified
+    </label>
+
+    {% if connection_message %}
+    <div class="panel">
+        <strong>Test Results</strong>
+        <pre>{{ connection_message }}</pre>
+    </div>
+    {% endif %}
+
+    <div class="actions">
+
+        <button
+            type="submit"
+            name="action"
+            value="test"
+            class="button">
+
+            Test Connection
+
+        </button>
+
+        <button
+            type="submit"
+            name="action"
+            value="save"
+            class="button primary">
+
+            Save Configuration
+
+        </button>
+
+    </div>
+
+</form>
+
+{% endblock %}
