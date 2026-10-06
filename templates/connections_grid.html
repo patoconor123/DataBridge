@@ -5,14 +5,11 @@
 <h1>Connections</h1>
 
 <link rel="stylesheet"
-      href="https://cdn.datatables.net/1.13.8/css/jquery.dataTables.min.css">
+      href="{{ url_for('static', filename='jquery.dataTables.min.css') }}">
 
 <div class="panel">
 
-    <table id="connectionsTable" class="display">
-
-        <thead>
-            <tr           <th>Fetch Type</th>
+    <table id="connectionsTable"     <th>Fetch Type</th>
                 <th>Method</th>
                 <th>Verified</th>
             </tr>
@@ -23,15 +20,10 @@
         {% for row in rows_data %}
 
             <tr>
-
                 <td>{{ row.name }}</td>
-
                 <td>{{ row.fetch_type }}</td>
-
                 <td>{{ row.fetch_method }}</td>
-
                 <td>{{ row.verified }}</td>
-
             </tr>
 
         {% endfor %}
@@ -42,26 +34,15 @@
 
 </div>
 
-<script src="jquery.com/jquery-3.7.1.min.jsscript>
+<scriptscript>
 
-<script src="https://cdn.datatables.net/1.13.8taTables.min.jsscript>
-
-<script>
+<script src="{{ url_for('static', filename='y:", typeof $);
+console.log("DataTables:", typeof $.fn.DataTable);
 
 $(document).ready(function () {
 
     $('#connectionsTable').DataTable({
-
-        pageLength: 10,
-
-        order: [[0, 'asc']],
-
-        searching: true,
-
-        paging: true,
-
-        info: true
-
+        pageLength: 10
     });
 
 });
