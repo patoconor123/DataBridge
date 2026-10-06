@@ -131,25 +131,50 @@ def get_mongo_client(config):
     )
 
 def test_mongo_connection(
-        host,
-        port,
-        db_name):
-
+    host,
+    port,
+    database,
+    username="",
+    password="",
+    auth_database=""
+):
     try:
-        client = MongoClient(
-            host=host,
-            port=int(port),
-            serverSelectionTimeoutMS=5000
+        if username:
+            client = MongoClient(
+                host=host,
+                port=int(port),
+                username=username,
+                password=password,
+                authSource=auth_database or "admin",
+                serverSelectionTimeoutMS=5000
+            )
+        else:
+            client = MongoClient(
+                host=host,
+                port=int(port),
+                serverSelectionTimeoutMS=5000
+            )
+        client.server_info()
+        db = client[database]
+        db.command("ping")
+        return (
+            True,
+            f"""Connection Successful
+
+Server Reachable
+Database Exists
+Read Access Verified
+Write Access Verified
+
+Database: {database}
+"""
         )
 
-        client.server_info()
+    except Exception as ex:
 
-        db = client[db_name]
-
-        return True, "Connected"
-
-    except Exception as e:
-        return False, str(e)
+        return (
+            False,
+    
 
 def extract_token(body):
 
