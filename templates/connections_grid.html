@@ -9,11 +9,8 @@
 
 <div class="panel">
 
-    <splay">
-
-        <thead>
-            <tr>
-                <th>Name</th>
+    <table id="connectionsTable" class="display">
+             <th>Name</th>
                 <th>Fetch Type</th>
                 <th>Method</th>
                 <th>Verified</th>
@@ -22,7 +19,7 @@
 
         <tbody>
 
-            {% for row in rows_data %}
+        {% for row in rows_data %}
 
             <tr>
                 <td>{{ row.name }}</td>
@@ -31,7 +28,7 @@
                 <td>{{ row.verified }}</td>
             </tr>
 
-            {% endfor %}
+        {% endfor %}
 
         </tbody>
 
@@ -39,16 +36,23 @@
 
 </div>
 
+<scriptscript>
+
  }}"></script>
 
-<script src="{{ url_for('static', filename=ry =", typeof $);
+<script>
+
+console.log("jQuery:", typeof $);
 
 $(document).ready(function() {
 
     console.log("DataTables initialized");
 
     $('#connectionsTable').DataTable({
-        pageLength: 10
+        pageLength: 10,
+        searching: true,
+        paging: true,
+        ordering: true
     });
 
 });
