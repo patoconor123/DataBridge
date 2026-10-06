@@ -717,7 +717,7 @@ def new_connection():
                 "success"
             )
 
-            return redirect(url_for("connections"))
+            return redirect(url_for("connections/grid"))
 
         except Exception as exc:
             return render_template(
