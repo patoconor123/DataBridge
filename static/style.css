@@ -67,6 +67,10 @@ body{
     font-weight:600;
 }
 
+.nav-link.active{
+    background:#1f64d8;
+}
+
 .nav-link:hover{
     background:#253654;
     color:white !important;
