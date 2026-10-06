@@ -56,6 +56,26 @@ body{
     flex-shrink:0;
 }
 
+.data-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.data-table th{
+    text-align:left;
+    padding:12px;
+    background:#f3f5f7;
+}
+
+.data-table td{
+    padding:12px;
+    border-top:1px solid #dde2ea;
+}
+
+.data-table tr:hover{
+    background:#f9fafb;
+}
+
 .form-grid{
 display:grid;
 grid-template-columns:220px 1fr;
