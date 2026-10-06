@@ -9,8 +9,8 @@
 <script src="{{ url_for('static', filename='jquery-3.7.1.min.js') }}"></script>
 <script src="{{ url_for('static', filename='jquery.dataTables.min.js') }}"></script>
 <script>
-      console.log("jQuery =", typeof $);
       $(document).ready(function () {
+            console.log("jQuery =", typeof $);
           console.log("Table Count =", $('#connectionsTable').length);
           console.log("DataTable =", typeof $.fn.DataTable );
           $('#connectionsTable').DataTable({
