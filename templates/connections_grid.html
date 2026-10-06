@@ -1,12 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <h1>Connections Grid Test</h1>
-
- }}">
-
- }}">
 
 <div
     id="myGrid"
@@ -14,53 +9,28 @@
     style="height:600px;width:100%;">
 </div>
 
- }}"></script>
-
 <script>
+    const rowData = {{ rows|safe }};
 
-const rowData = {{ rows|safe }};
+    const gridOptions = {
+        columnDefs: [
+            { field: "name" },
+            { field: "fetch_type" },
+            { field: "fetch_method" },
+            { field: "verified" }
+        ],
+        rowData: rowData,
+        defaultColDef: {
+            sortable: true,
+            filter: true,
+            resizable: true
+        },
+        pagination: true
+    };
 
-console.log("Rows:");
-console.log(rowData);
-
-const gridOptions = {
-
-    columnDefs: [
-        { field: "name" },
-        { field: "fetch_type" },
-        { field: "fetch_method" },
-        { field: "verified" }
-    ],
-
-    rowData: rowData,
-
-    defaultColDef: {
-        sortable: true,
-        filter: true,
-        resizable: true
-    },
-
-    pagination: true
-};
-
-document.addEventListener("DOMContentLoaded", function() {
-
-    const gridDiv =
-        document.querySelector("#myGrid");
-
-    console.log("Grid Div:");
-    console.log(gridDiv);
-
-    console.log("agGrid:");
-    console.log(agGrid);
-
-    new agGrid.Grid(
-        gridDiv,
-        gridOptions
-    );
-
-});
-
+    document.addEventListener("DOMContentLoaded", function () {
+        const gridDiv = document.querySelector("#myGrid");
+        new agGrid.Grid(gridDiv, gridOptions);
+    });
 </script>
-
 {% endblock %}
