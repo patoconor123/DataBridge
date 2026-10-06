@@ -7,7 +7,7 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
-
+from pymongo import MongoClient
 import requests
 from flask import Flask, flash, jsonify, redirect, render_template, request, url_for
 
@@ -15,6 +15,7 @@ BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "subscribers.db"
 OUTPUT_DIR = BASE_DIR / "output"
 OUTPUT_DIR.mkdir(exist_ok=True)
+CONFIG_PATH = BASE_DIR / "config.json"
 
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-only-change-me")
@@ -22,6 +23,8 @@ workers = {}
 log_buffers = {}
 locks = {}
 
+def is_configured():
+    return CONFIG_PATH.exists()
 
 def now():
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
@@ -79,6 +82,51 @@ def update_status(sub_id, status):
     with db() as conn:
         conn.execute("UPDATE subscribers SET status = ? WHERE id = ?", (status, sub_id))
 
+
+def get_mongo_client(config):
+
+    host = config["mongo_host"]
+    port = config["mongo_port"]
+
+    username = config.get("mongo_username", "")
+    password = config.get("mongo_password", "")
+    auth_db = config.get("mongo_auth_database", "")
+
+    if username and password:
+
+        return MongoClient(
+            host=host,
+            port=port,
+            username=username,
+            password=password,
+            authSource=auth_db
+        )
+
+    return MongoClient(
+        host=host,
+        port=port
+    )
+
+def test_mongo_connection(
+        host,
+        port,
+        db_name):
+
+    try:
+        client = MongoClient(
+            host=host,
+            port=int(port),
+            serverSelectionTimeoutMS=5000
+        )
+
+        client.server_info()
+
+        db = client[db_name]
+
+        return True, "Connected"
+
+    except Exception as e:
+        return False, str(e)
 
 def extract_token(body):
 
@@ -292,6 +340,39 @@ def duplicate(sub_id):
         )
     )
 
+@app.route("/setup", methods=["GET", "POST"])
+def setup():
+
+    if request.method == "POST":
+
+        config = {
+            "mongo_host": request.form["mongo_host"],
+            "mongo_port": int(request.form["mongo_port"]),
+            "mongo_database": request.form["mongo_database"],
+            "use_auth": request.form.get("use_auth") == "on",
+            "mongo_username": request.form.get("mongo_username", ""),
+            "mongo_password": request.form.get("mongo_password", "")
+        }
+
+        with open(CONFIG_PATH, "w") as f:
+            json.dump(config, f, indent=2)
+
+        return redirect(url_for("index"))
+
+    return render_template("settings.html")
+
+
+@app.before_request
+def require_setup():
+
+    allowed_routes = {
+        "setup",
+        "static"
+    }
+
+    if not is_configured():
+        if request.endpoint not in allowed_routes:
+            return redirect(url_for("setup"))
 
 @app.route("/subscriber/new", methods=["GET", "POST"])
 def new_subscriber():
