@@ -53,16 +53,21 @@ body{
 }
 
 .nav-link{
-    color:white;
+    display:block;
+    color:#ffffff !important;
     text-decoration:none;
     padding:12px 14px;
     border-radius:8px;
-    transition:all .15s ease;
     font-weight:500;
 }
 
 .nav-link:hover{
     background:#253654;
+    color:#ffffff !important;
+}
+
+.nav-link:visited{
+    color:#ffffff;
 }
 
 .nav-link.active{
