@@ -258,6 +258,25 @@ def save_config(form):
 
     with open(CONFIG_PATH, "w") as f:
         json.dump(config, f, indent=4)
+    database = get_mongo_database()
+    connections = database["connections"]
+    
+    connections.update_one(
+        {
+            "name": "DataBridge Mongo"
+        },
+        {
+            "$set": {
+                "name": "DataBridge Mongo",
+                "connection_type": "MONGO",
+                "database": "databridge",
+                "system_connection": True,
+                "verified": True,
+                "description": "Built-in DataBridge Mongo connection"
+            }
+        },
+        upsert=True
+    )
 
 def get_mongo_client(config):
 
