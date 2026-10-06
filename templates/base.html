@@ -17,24 +17,45 @@
 
         <aside class="sidebar">
 
-            <div class="logo">
-                <h2>DataBridge</h2>
+         >DataBridge</h2>
                 <small>Data Integration Platform</small>
             </div>
 
             <nav class="nav-menu">
-                <a href="/" class="nav-link">Dashboard</a>
-                <a href="/ class="nav-link">Flows</a>
-                <a href="/" class="nav-link>Connections</a>
-                <a href="/run-history" class="nav-link">Run History<//logs" class="nav-link">Logs</a>
-                <a href="/" class="nav-link>Settings</a>
+
+                <a href="/" class="nav-link">
+                    Dashboard
+                </a>
+
+                <a href="/">
+                    Flows
+                </a>
+
+                <a href="/">
+                    Connections
+                </a>
+
+                <a href="/">
+                    Run History
+                </a>
+
+                <a href="/logs" class="nav-link">
+                    Logs
+                </a>
+
+                <a href="/">
+                    Settings
+                </a>
+
             </nav>
 
         </aside>
 
         <main class="content">
+
             {% block content %}
             {% endblock %}
+
         </main>
 
     </div>
