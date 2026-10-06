@@ -93,18 +93,18 @@ def update_status(sub_id, status):
         conn.execute("UPDATE subscribers SET status = ? WHERE id = ?", (status, sub_id))
 
 def save_config(form):
-     config = {
-    "mongo_host": form["mongo_host"],
-    "mongo_port": int(form["mongo_port"]),
-    "mongo_database": form["mongo_database"],
-    "mongo_username": form["mongo_username"],
-    "mongo_password": form["mongo_password"],
-    "mongo_auth_database": form["mongo_auth_database"]
+
+    config = {
+        "mongo_host": form["mongo_host"],
+        "mongo_port": int(form["mongo_port"]),
+        "mongo_database": form["mongo_database"],
+        "mongo_username": form["mongo_username"],
+        "mongo_password": form["mongo_password"],
+        "mongo_auth_database": form["mongo_auth_database"]
     }
- 
+
     with open(CONFIG_PATH, "w") as f:
         json.dump(config, f, indent=4)
-        print(f"Config saved to {CONFIG_PATH}")
 
 def get_mongo_client(config):
 
