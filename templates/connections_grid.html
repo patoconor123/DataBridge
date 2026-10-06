@@ -6,58 +6,37 @@
 
     <div>
         <h1>Connections</h1>
-        <p>
-            Browse all DataBridge connections.
-        </p>
+        <p>Browse all DataBridge connections.</p>
     </div>
 
 </div>
 
-<link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/ag-grid-community/styleset"
-    href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpine   class="ag-theme-alpine"
+<!-- AG Grid Styles -->
+
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css">
+
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpinelpine"
     style="height:700px;width:100%;">
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/ag-grid-community-community.min.jsscript>
+<pre>{{ rows }}</pre>
+
+<script src="https://cdn.jsdelivr.net/npm/ag-grid-community/distunity.min.jsscript>
 
 <script>
 
 const rowData = {{ rows|safe }};
 
+console.log("Rows:");
+console.log(rowData);
+
 const columnDefs = [
-
-    {
-        field: "_id",
-        hide: true
-    },
-
-    {
-        field: "name",
-        headerName: "Connection Name"
-    },
-
-    {
-        field: "fetch_type",
-        headerName: "Fetch Type"
-    },
-
-    {
-        field: "fetch_method",
-        headerName: "Method"
-    },
-
-    {
-        field: "verified",
-        headerName: "Verified"
-    },
-
-    {
-        field: "created_at",
-        headerName: "Created"
-    }
-
+    { field: "name" },
+    { field: "fetch_type" },
+    { field: "fetch_method" },
+    { field: "verified" }
 ];
 
 const gridOptions = {
@@ -66,18 +45,14 @@ const gridOptions = {
 
     rowData: rowData,
 
-    animateRows: true,
-
-    pagination: true,
-
-    paginationPageSize: 20,
-
     defaultColDef: {
         sortable: true,
         filter: true,
         resizable: true
-    }
+    },
 
+    pagination: true,
+    paginationPageSize: 25
 };
 
 new agGrid.Grid(
