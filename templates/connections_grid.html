@@ -10,22 +10,35 @@
 <script src="{{ url_for('static', filename='jquery.dataTables.min.js') }}"></script>
 <script>
       console.log("jQuery =", typeof $);
-      console.log("READY");
- 
-console.log(
-$('#connectionsTable').length
-);         
+      console.log("Table Count =",$('#connectionsTable').length);
+      console.log("DataTable =",typeof $.fn.DataTable );
+      $(document).ready(function () {
+          $('#connectionsTable').DataTable({
+              pageLength: 10,
+              searching: true,
+              paging: true,
+              ordering: true
+          });
+      });
 </script>
 <table id="connectionsTable" class="display">
-    <tr>
-        <th>Name</th>
-    </tr>
-
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Fetch Type</th>
+            <th>Method</th>
+            <th>Verified</th>
+        </tr>
+    </thead>
+    <tbody>
     {% for row in rows_data %}
-    <tr>
-        <td>{{ row.name }}</td>
-    </tr>
+        <tr>
+            <td>{{ row.name }}</td>
+            <td>{{ row.fetch_type }}</td>
+            <td>{{ row.fetch_method }}</td>
+            <td>{{ row.verified }}</td>
+        </tr>
     {% endfor %}
+    </tbody>
 </table>
-
 {% endblock %}
