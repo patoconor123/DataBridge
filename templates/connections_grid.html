@@ -8,7 +8,9 @@
       href="{{ url_for('static', filename='jquery.dataTables.min.css') }}">
 <script src="{{ url_for('static', filename='jquery-3.7.1.min.js') }}"</script>
 <script src="{{ url_for('static', filename='jquery.dataTables.min.js') }}"></script>
-
+<script>
+console.log("jQuery =", typeof $);
+</script>
 <table>
     <tr>
         <th>Name</th>
