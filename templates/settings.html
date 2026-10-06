@@ -14,7 +14,7 @@
 
 <div class="panel form">
 
-    <h2>MongoDB Connection</h2>
+    <h2>MongoDB Configuration</h2>
 
     <form method="post">
 
@@ -23,77 +23,60 @@
             <input
                 type="text"
                 name="mongo_host"
+                value="{{ config.mongo_host if config else '' }}"
                 placeholder="awsohcentricq01.underarmour.com"
                 required>
         </label>
 
-        <label>
-            Mongo Port
-            <input
-                type="number"
-                name="mongo_port"
-                value="27017"
-                required>
-        </label>
+        <div class="split">
 
-        <label>
-            Database Name
-            <input
-                type="text"
-                name="mongo_database"
-                value="databridge"
-                required>
-        </label>
+            <label>
+                Mongo Port
+                <input
+                    type="number"
+                    name="mongo_port"
+                    value="{{ config.mongo_port if config else '27017' }}"
+                    required>
+            </label>
 
-        <label>
-            Username
-            <input
-                type="text"
-                name="mongo_username">
-        </label>
+            <label>
+                Database Name
+                <input
+                    type="text"
+                    name="mongo_database"
+                    value="{{ config.mongo_database if config else 'databridge' }}"
+                    required>
+            </label>
 
-        <label>
-            Password
-            <input
-                type="password"
-                name="mongo_password">
-        </label>
+        </div>
+
+        <hr>
+
+        <h3>Authentication (Optional)</h3>
+
+        <div class="split">
+
+            <label>
+                Username
+                <input
+                    type="text"
+                    name="mongo_username"
+                    value="{{ config.mongo_username if config else '' }}">
+            </label>
+
+            <label>
+                Password
+                <input
+                    type="password"
+                    name="mongo_password"
+                    value="{{ config.mongo_password if config else '' }}">
+            </label>
+
+        </div>
+
         <label>
             Authentication Database
             <input
                 type="text"
-                name="mongo_auth_database">
-        </label>
-
-        <div class="actions">
-
-            <button
-                type="submit"
-                name="action"
-                value="test"
-                class="button">
-                Test Connection
-            </button>
-
-            <button
-                type="submit"
-                name="action"
-                value="save"
-                class="button primary">
-                Save Connection
-            </button>
-
-        </div>
-
-    </form>
-
-    {% if connection_status %}
-    <div class="status-card">
-        <strong>Status:</strong>
-        {{ connection_status }}
-    </div>
-    {% endif %}
-
-</div>
-
-{% endblock %}
+                name="mongo_auth_database"
+                value="{{ config.mongo_auth_database if config
