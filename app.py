@@ -843,7 +843,22 @@ def edit_subscriber(sub_id):
         sub=sub,
         edit_mode=True
     )
+@app.route("/connections/grid")
+def connections_grid():
 
+    db = get_mongo_database()
+
+    rows = list(
+        db.connections.find(
+            {},
+            {"_id": 0}
+        )
+    )
+
+    return render_template(
+        "connections_grid.html",
+        rows=json.dumps(rows, default=str)
+    )
 
 @app.route("/subscriber/<sub_id>")
 def subscriber_detail(sub_id):
