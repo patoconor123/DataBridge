@@ -32,6 +32,30 @@ body{
     flex-shrink:0;
 }
 
+.form-grid{
+display:grid;
+grid-template-columns:220px 1fr;
+gap:14px 20px;
+align-items:center;
+}
+ 
+.form-grid label{
+font-weight:600;
+margin:0;
+}
+ 
+.form-grid input,
+.form-grid select,
+.form-grid textarea{
+width:100%;
+}
+ 
+.form-actions{
+display:flex;
+justify-content:flex-end;
+gap:12px;
+margin-top:24px;
+}
 .content{
     flex:1;
 
