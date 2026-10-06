@@ -24,6 +24,19 @@ body{
     font-family:inherit;
 }
 
+#connectionsTable th,
+#connectionsTable td {
+text-align: left;
+}
+
+table.dataTable {
+    width: 100% !important;
+}
+
+.dataTables_wrapper {
+    width: 100%;
+}
+
 .connection-success{
     color:#067647;
     background:#ecfdf3;
@@ -54,10 +67,6 @@ body{
     padding:24px;
 
     flex-shrink:0;
-}
-
-table.dataTable {
-    width:100% !important;
 }
 
 .dataTables_filter {
