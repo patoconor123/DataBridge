@@ -335,9 +335,7 @@ def worker(sub_id, stop_event):
 
 @app.route("/")
 def index():
-    with db() as conn:
-        subscribers = [dict(row) for row in conn.execute("SELECT * FROM subscribers ORDER BY created_at DESC")]
-    return render_template("index.html", subscribers=subscribers)
+    return render_template("dashboard.html")
 
 @app.post("/subscriber/<sub_id>/duplicate")
 def duplicate(sub_id):
