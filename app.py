@@ -369,9 +369,7 @@ def setup():
     if request.method == "POST":
         action = request.form.get("action")
         if action == "test":
- 
         success, message = test_mongo_connection(...)
-         
         return render_template(
         "settings.html",
         connection_verified=success,
