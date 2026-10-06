@@ -130,6 +130,8 @@ def get_mongo_client(config):
         port=port
     )
 
+from pymongo import MongoClient
+
 def test_mongo_connection(
     host,
     port,
@@ -138,8 +140,11 @@ def test_mongo_connection(
     password="",
     auth_database=""
 ):
+
     try:
+
         if username:
+
             client = MongoClient(
                 host=host,
                 port=int(port),
@@ -148,23 +153,38 @@ def test_mongo_connection(
                 authSource=auth_database or "admin",
                 serverSelectionTimeoutMS=5000
             )
+
         else:
+
             client = MongoClient(
                 host=host,
                 port=int(port),
                 serverSelectionTimeoutMS=5000
             )
+
         client.server_info()
+
         db = client[database]
+
         db.command("ping")
+
+        # Verify write access
+        db.settings.insert_one({
+            "test": True
+        })
+
+        db.settings.delete_one({
+            "test": True
+        })
+
         return (
             True,
             f"""Connection Successful
 
-Server Reachable
-Database Exists
-Read Access Verified
-Write Access Verified
+✅ Server Reachable
+✅ Database Exists
+✅ Read Access Verified
+✅ Write Access Verified
 
 Database: {database}
 """
@@ -174,7 +194,8 @@ Database: {database}
 
         return (
             False,
-    
+            str(ex)
+        )
 
 def extract_token(body):
 
