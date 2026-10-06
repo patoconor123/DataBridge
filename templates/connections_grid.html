@@ -2,54 +2,54 @@
 
 {% block content %}
 
-<div class="title">
+<h1>Connections Grid Test</h1>
 
-    <div>
-        <h1>Connections</h1>
-        <p>
-            Browse all DataBridge connections.
-        </p>
-    </div>
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css">
 
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/agyle="height:600px;width:100%;">
 </div>
 
-<div class="panel">
+<script src="https://cdn.jsdelivr.net/npm/ag-grid-t/ag-grid-community.min.jsscript>
 
-    <table class="data-table">
+<script>
 
-        <thead>
+const rowData = {{ rows|safe }};
 
-            <tr>
-                <th>Name</th>
-                <th>Fetch Type</th>
-                <th>Method</th>
-                <th>Verified</th>
-            </tr>
+console.log(rowData);
 
-        </thead>
+const gridOptions = {
 
-        <tbody>
+    columnDefs: [
+        { field: "name" },
+        { field: "fetch_type" },
+        { field: "fetch_method" },
+        { field: "verified" }
+    ],
 
-        {% for row in rows_data %}
+    rowData: rowData,
 
-            <tr>
+    defaultColDef: {
+        sortable: true,
+        filter: true,
+        resizable: true
+    },
 
-                <td>{{ row.name }}</td>
+    pagination: true
+};
 
-                <td>{{ row.fetch_type }}</td>
+document.addEventListener("DOMContentLoaded", function () {
 
-                <td>{{ row.fetch_method }}</td>
+    const gridDiv = document.querySelector("#myGrid");
 
-                <td>{{ row.verified }}</td>
+    new agGrid.Grid(
+        gridDiv,
+        gridOptions
+    );
 
-            </tr>
+});
 
-        {% endfor %}
-
-        </tbody>
-
-    </table>
-
-</div>
+</script>
 
 {% endblock %}
