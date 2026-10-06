@@ -70,9 +70,6 @@ body{
     color:#ffffff;
 }
 
-.nav-link.active{
-    background:#1f64d8;
-}
 
 .content{
     flex:1;
