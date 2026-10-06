@@ -6,60 +6,50 @@
 
     <div>
         <h1>Connections</h1>
-        <p>Browse all DataBridge connections.</p>
+        <p>
+            Browse all DataBridge connections.
+        </p>
     </div>
 
 </div>
 
-<!-- AG Grid Styles -->
+<div class="panel">
 
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-grid.css">
+    <table class="data-table">
 
-<link rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/ag-grid-community/styles/ag-theme-alpinelpine"
-    style="height:700px;width:100%;">
+        <thead>
+
+            <tr>
+                <th>Name</th>
+                <th>Fetch Type</th>
+                <th>Method</th>
+                <th>Verified</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for row in rows_data %}
+
+            <tr>
+
+                <td>{{ row.name }}</td>
+
+                <td>{{ row.fetch_type }}</td>
+
+                <td>{{ row.fetch_method }}</td>
+
+                <td>{{ row.verified }}</td>
+
+            </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
 </div>
-
-<pre>{{ rows }}</pre>
-
-<script src="https://cdn.jsdelivr.net/npm/ag-grid-community/distunity.min.jsscript>
-
-<script>
-
-const rowData = {{ rows|safe }};
-
-console.log("Rows:");
-console.log(rowData);
-
-const columnDefs = [
-    { field: "name" },
-    { field: "fetch_type" },
-    { field: "fetch_method" },
-    { field: "verified" }
-];
-
-const gridOptions = {
-
-    columnDefs: columnDefs,
-
-    rowData: rowData,
-
-    defaultColDef: {
-        sortable: true,
-        filter: true,
-        resizable: true
-    },
-
-    pagination: true,
-    paginationPageSize: 25
-};
-
-new agGrid.Grid(
-    document.getElementById("connectionsGrid"),
-    gridOptions
-);
-
-</script>
 
 {% endblock %}
