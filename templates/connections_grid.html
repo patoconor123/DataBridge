@@ -6,27 +6,15 @@
 
 <link rel="stylesheet"
       href="{{ url_for('static', filename='jquery.dataTables.min.css') }}">
-<script>
- 
-console.log("jQuery =", typeof $);
- 
-console.log(
-"DataTable =",
-typeof $.fn.DataTable
-);
- 
-$(document).ready(function() {
- 
-$('#connectionsTable').DataTable({
-pageLength: 10
-});
- 
-});
- 
-</script>
+
 <div class="panel">
 
-    <table id="connectionsTable"     <th>Fetch Type</th>
+    <splay">
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Fetch Type</th>
                 <th>Method</th>
                 <th>Verified</th>
             </tr>
@@ -34,7 +22,7 @@ pageLength: 10
 
         <tbody>
 
-        {% for row in rows_data %}
+            {% for row in rows_data %}
 
             <tr>
                 <td>{{ row.name }}</td>
@@ -43,7 +31,7 @@ pageLength: 10
                 <td>{{ row.verified }}</td>
             </tr>
 
-        {% endfor %}
+            {% endfor %}
 
         </tbody>
 
@@ -51,12 +39,13 @@ pageLength: 10
 
 </div>
 
-<scriptscript>
+ }}"></script>
 
-<script src="{{ url_for('static', filename='y:", typeof $);
-console.log("DataTables:", typeof $.fn.DataTable);
+<script src="{{ url_for('static', filename=ry =", typeof $);
 
-$(document).ready(function () {
+$(document).ready(function() {
+
+    console.log("DataTables initialized");
 
     $('#connectionsTable').DataTable({
         pageLength: 10
