@@ -40,7 +40,12 @@
 <script>
 
 console.log("jQuery:", typeof $);
-
+if (typeof $ !== "undefined") {
+console.log(
+"DataTable =",
+typeof $.fn.DataTable
+);
+}
 $(document).ready(function() {
 
     console.log("DataTables initialized");
