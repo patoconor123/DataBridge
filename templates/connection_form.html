@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="title">
+
+    <div>
+        <h1>Add Connection</h1>
+        <p>
+            Configure a reusable DataBridge connection.
+        </p>
+    </div>
+
+</div>
+
+<form method="post" class="panel form">
+
+    <label>
+        Connection Name
+        <input
+            type="text"
+            name="name"
+            required>
+    </label>
+
+    <div class="split">
+
+        <label>
+            Fetch Type
+            <select name="fetch_type">
+
+                <option value="REST">
+                    REST
+                </option>
+
+                <option value="QUEUE">
+                    Queue
+                </option>
+
+            </select>
+        </label>
+
+        <label>
+            Fetch Method
+            <select name="fetch_method">
+
+                <option value="GET">
+                    GET
+                </option>
+
+                <option value="POST">
+                    POST
+                </option>
+
+            </select>
+        </label>
+
+    </div>
+
+    <div class="split">
+
+        <label>
+            Load Type
+            <select name="load_type">
+
+                <option value="FULL">
+                    Full
+                </option>
+
+                <option value="DELTA">
+                    Delta
+                </option>
+
+            </select>
+        </label>
+
+        <label>
+            Endpoint
+            <input
+                type="text"
+                name="endpoint">
+        </label>
+
+    </div>
+
+    <label>
+        Authentication Endpoint
+        <input
+            type="text"
+            name="auth_endpoint">
+    </label>
+
+    <label>
+        Ack Endpoint
+        <input
+            type="text"
+            name="ack_endpoint">
+    </label>
+
+    <label>
+        Parameters (JSON)
+        <textarea
+            name="params"
+            rows="6"></textarea>
+    </label>
+
+    <label>
+        Request Body (JSON)
+        <textarea
+            name="body"
+            rows="6"></textarea>
+    </label>
+
+    <div class="actions">
+
+        <button
+            type="submit"
+            name="action"
+            value="test"
+            class="button">
+
+            Test Connection
+
+        </button>
+
+        <button
+            type="submit"
+            name="action"
+            value="save"
+            class="button primary">
+
+            Save Connection
+
+        </button>
+
+    </div>
+
+</form>
+
+{% endblock %}
