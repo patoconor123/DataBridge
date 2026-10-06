@@ -2,7 +2,21 @@
 
 {% block content %}
 
-<h1>Connections Test</h1>
+<div class="title">
+
+    <div>
+        <h1>Connections</h1>
+        <p>
+            Configure reusable source and destination connections.
+        </p>
+    </div>
+
+    <a href="/connections/new"
+        class="button primary">
+        + Add
+    </a>
+
+</div>
 
 <link rel="stylesheet"
       href="{{ url_for('static', filename='jquery.dataTables.min.css') }}">
