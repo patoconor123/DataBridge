@@ -17,7 +17,7 @@ OUTPUT_DIR = BASE_DIR / "output"
 OUTPUT_DIR.mkdir(exist_ok=True)
 CONFIG_PATH = BASE_DIR / "config.json"
 mongo_client = None
-
+datadridge_db = None
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-only-change-me")
 workers = {}
@@ -43,6 +43,27 @@ def now():
 def load_config():
     with open(CONFIG_PATH, "r") as f:
         return json.load(f)
+        
+def connect_app_db():
+    global mongo_client
+    global databridge_db
+    config = load_config()
+    databridge_db = config["mongo_database"]
+    if mongo_client is None:
+        client_options = {
+            "host": config["mongo_host"],
+            "port": int(config["mongo_port"]),
+            "serverSelectionTimeoutMS": 5000
+        }    
+        client = MongoClient(**client_options)
+        client.admin.command("ping")
+        mongo_client = client
+        databridge_db = client[config["mongo_database"]]
+    
+def get_databridge_db_by_name(databsename):
+    global mongo_client
+    global mongo
+    
 
 def get_global_mongo_database():
 
@@ -593,7 +614,8 @@ def duplicate(sub_id):
 
 @app.route("/flows")
 def flows():
-    db = get_mongo_database()
+    global databridge_db
+    db = databridge_db
     if "flows" not in db.list_collection_names():
         db.create_collection("flows")
     records = []
@@ -896,7 +918,8 @@ def edit_subscriber(sub_id):
     )
 @app.route("/connections/grid")
 def connections_grid():
-    db = mongo_client
+    global databridge_db
+    db = databidge_db
 
     records = []
 
@@ -964,5 +987,5 @@ def status(sub_id):
 
 
 if __name__ == "__main__":
-    get_global_mongo_database()
+    connect_app_db()
     app.run(host="127.0.0.1", port=5007, debug=True, threaded=True)
