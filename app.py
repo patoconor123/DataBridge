@@ -190,28 +190,7 @@ def test_rest_connection(form):
     except requests.RequestException as exc:
         return False, f"REST connection failed: {exc}"
 
-def get_mongo_database():
-    config = load_config()
 
-    client_options = {
-        "host": config["mongo_host"],
-        "port": int(config["mongo_port"]),
-        "serverSelectionTimeoutMS": 5000
-    }
-
-    username = config.get("mongo_username", "").strip()
-    password = config.get("mongo_password", "")
-    auth_database = config.get("mongo_auth_database", "").strip()
-
-    if username:
-        client_options["username"] = username
-        client_options["password"] = password
-        client_options["authSource"] = auth_database or "admin"
-
-    client = MongoClient(**client_options)
-    client.admin.command("ping")
-
-    return client[config["mongo_database"]]
 
 def init_db():
     with db() as conn:
