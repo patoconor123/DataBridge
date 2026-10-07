@@ -111,6 +111,33 @@ def get_connection_form_values(form):
         "params": form.get("params", ""),
         "body": form.get("body", "")
     }
+
+def get_flow_form_values(form):
+    return {
+        "description": form.get(description, ""),
+        "fetch_ack_endpoint": form.get(fetch_ack_endpoint, "").strip(),
+        "fetch_body": form.get(fetch_body, ""),
+        "fetch_connection": form.get(fetch_connection, ""),
+        "fetch_database": form.get(fetch_database, ""),
+        "fetch_endpoint": form.get(fetch_endpoint, "").strip(),
+        "fetch_method": form.get(fetch_method, ""),
+        "fetch_params": form.get(fetch_params, ""),
+        "fetch_query": form.get(fetch_query, ""),
+        "fetch_table": form.get(fetch_table, ""),
+        "load_strategy": form.get(load_strategy, ""),
+        "name": form.get(name, "").strip(),
+        "run_type": form.get(run_type, ""),
+        "send_ack_endpoint": form.get(send_ack_endpoint, "").strip(),
+        "send_body": form.get(send_body, ""),
+        "send_connection": form.get(send_connection, ""),
+        "send_database": form.get(send_database, ""),
+        "send_endpoint": form.get(send_endpoint, "").strip(),
+        "send_method": form.get(send_method, ""),
+        "send_params": form.get(send_params, ""),
+        "send_query": form.get(send_query, ""),
+        "send_table": form.get(send_table, "")
+    }
+
 def test_rest_connection(form):
     auth_endpoint = form.get("auth_endpoint", "").strip()
     auth_method = form.get("auth_method", "POST").upper().strip()
@@ -626,13 +653,18 @@ def flows():
         rows_data=records
     )
 
-@app.route("/flows/new")
+@app.route("/flows/new", methods=["GET", "POST"])
 def flowsnew():
-
-    return render_template(
+    if request.method == "GET":
+        return render_template(
         "flow_form.html",
         form_values={}
     )
+
+    action = request.form.get("action")
+    form_values = get_flow_form_values(request.form)
+    if action == "save":
+        
 
 
 @app.route("/setup", methods=["GET", "POST"])
