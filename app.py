@@ -59,9 +59,9 @@ def connect_app_db():
         mongo_client = client
         databridge_db = client[config["mongo_database"]]
     
-def get_databridge_db_by_name(databsename):
+def get_databridge_db_by_name(databasename):
     global mongo_client
-    global mongo
+    return mongo_client[databasename]
     
 
 def get_global_mongo_database():
@@ -662,9 +662,22 @@ def flowsnew():
     )
 
     action = request.form.get("action")
+    global databridge_db
+    database = databridge_db
+    flows_collection = database["flows"]
     form_values = get_flow_form_values(request.form)
+    form_data = await request.form()
+    name = parse_json_field(request.form.get("name"),"Request Body")
+    all_fields = dict(form_data) 
     if action == "save":
         
+        flows_collection.upsert_one(
+                all_fields
+            )
+        flash(
+                f'Flow "{name}" saved successfully.',
+                "success"
+            )
 
 
 @app.route("/setup", methods=["GET", "POST"])
