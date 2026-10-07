@@ -16,6 +16,7 @@ DB_PATH = BASE_DIR / "subscribers.db"
 OUTPUT_DIR = BASE_DIR / "output"
 OUTPUT_DIR.mkdir(exist_ok=True)
 CONFIG_PATH = BASE_DIR / "config.json"
+mongo_client = None
 
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-only-change-me")
@@ -42,8 +43,6 @@ def now():
 def load_config():
     with open(CONFIG_PATH, "r") as f:
         return json.load(f)
-
-mongo_client = None
 
 def get_global_mongo_database():
 
