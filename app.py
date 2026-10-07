@@ -665,7 +665,6 @@ def flowsnew():
     global databridge_db
     database = databridge_db
     flows_collection = database["flows"]
-    form_values = get_flow_form_values(request.form)
     form_data = request.form()
     name = parse_json_field(request.form.get("name"),"Request Body")
     all_fields = dict(form_data) 
