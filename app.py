@@ -50,9 +50,7 @@ def get_global_mongo_database():
     global mongo_client
 
     if mongo_client is None:
-
-         config = load_config()
-
+        config = load_config()
         client_options = {
             "host": config["mongo_host"],
             "port": int(config["mongo_port"]),
@@ -60,8 +58,8 @@ def get_global_mongo_database():
         }    
         client = MongoClient(**client_options)
         client.admin.command("ping")
-    
         return client[config["mongo_database"]]
+        
 
 def parse_json_field(raw_value, field_name):
     raw_value = (raw_value or "").strip()
