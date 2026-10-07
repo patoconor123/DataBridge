@@ -899,7 +899,7 @@ def edit_subscriber(sub_id):
 @app.route("/connections/grid")
 def connections_grid():
 
-    db = get_mongo_database()
+    db = mongo_client
 
     records = []
 
