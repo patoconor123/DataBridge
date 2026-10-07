@@ -17,7 +17,7 @@ OUTPUT_DIR = BASE_DIR / "output"
 OUTPUT_DIR.mkdir(exist_ok=True)
 CONFIG_PATH = BASE_DIR / "config.json"
 mongo_client = None
-datadridge_db = None
+databridge_db = None
 app = Flask(__name__)
 app.secret_key = os.getenv("FLASK_SECRET_KEY", "dev-only-change-me")
 workers = {}
@@ -48,7 +48,6 @@ def connect_app_db():
     global mongo_client
     global databridge_db
     config = load_config()
-    databridge_db = config["mongo_database"]
     if mongo_client is None:
         client_options = {
             "host": config["mongo_host"],
@@ -919,7 +918,7 @@ def edit_subscriber(sub_id):
 @app.route("/connections/grid")
 def connections_grid():
     global databridge_db
-    db = databidge_db
+    db = databridge_db
 
     records = []
 
