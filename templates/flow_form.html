@@ -23,7 +23,7 @@
         <label>Flow Name</label><input type="text" name="name" value="{{ form_values.get('name', '') }}">
 <label>Description</label><input type="text" name="description" value="{{ form_values.get('description', '') }}">
 <label>Run Type</label><input type="text" name="run_type" value="{{ form_values.get('run_type', '') }}">
-<label>Load Strategy</label><select name="load_strategy"><option value ="Upsert"></option></select>
+<label>Load Strategy</label><input type="text" name="load_strategy" value="{{ form_values.get('load_strategy', '') }}">
 <label>Fetch Ack Endpoint</label><input type="text" name="fetch_ack_endpoint" value="{{ form_values.get('fetch_ack_endpoint', '') }}">
 <label>Fetch Body</label><input type="text" name="fetch_body" value="{{ form_values.get('fetch_body', '') }}">
 <label>Fetch Connection</label><input type="text" name="fetch_connection" value="{{ form_values.get('fetch_connection', '') }}">
