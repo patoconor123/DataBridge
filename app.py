@@ -43,10 +43,24 @@ def load_config():
     with open(CONFIG_PATH, "r") as f:
         return json.load(f)
 
-def db():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
+mongo_client = None
+
+def get_mongo_database():
+
+    global mongo_client
+
+    if mongo_client is None:
+
+        config = load_config()
+
+        mongo_client = MongoClient(
+            host=config["mongo_host"],
+            port=int(config["mongo_port"])
+        )
+
+    return mongo_client[
+        config["mongo_database"]
+    ]
 
 def parse_json_field(raw_value, field_name):
     raw_value = (raw_value or "").strip()
@@ -648,9 +662,7 @@ def connections():
 
     config = load_config()
 
-    client = get_mongo_client(config)
-
-    db = client[config["mongo_database"]]
+    db = mongo_client[config["mongo_database"]]
 
     # Create collection if it doesn't exist
     if "connections" not in db.list_collection_names():
@@ -955,5 +967,5 @@ def status(sub_id):
 
 
 if __name__ == "__main__":
-    init_db()
+    get_mongo_database()
     app.run(host="127.0.0.1", port=5007, debug=True, threaded=True)
