@@ -45,22 +45,23 @@ def load_config():
 
 mongo_client = None
 
-def get_mongo_database():
+def get_global_mongo_database():
 
     global mongo_client
 
     if mongo_client is None:
 
-        config = load_config()
+         config = load_config()
 
-        mongo_client = MongoClient(
-            host=config["mongo_host"],
-            port=int(config["mongo_port"])
-        )
-
-    return mongo_client[
-        config["mongo_database"]
-    ]
+        client_options = {
+            "host": config["mongo_host"],
+            "port": int(config["mongo_port"]),
+            "serverSelectionTimeoutMS": 5000
+        }    
+        client = MongoClient(**client_options)
+        client.admin.command("ping")
+    
+        return client[config["mongo_database"]]
 
 def parse_json_field(raw_value, field_name):
     raw_value = (raw_value or "").strip()
@@ -190,7 +191,28 @@ def test_rest_connection(form):
     except requests.RequestException as exc:
         return False, f"REST connection failed: {exc}"
 
+def get_mongo_database():
+    config = load_config()
 
+    client_options = {
+        "host": config["mongo_host"],
+        "port": int(config["mongo_port"]),
+        "serverSelectionTimeoutMS": 5000
+    }
+
+    username = config.get("mongo_username", "").strip()
+    password = config.get("mongo_password", "")
+    auth_database = config.get("mongo_auth_database", "").strip()
+
+    if username:
+        client_options["username"] = username
+        client_options["password"] = password
+        client_options["authSource"] = auth_database or "admin"
+
+    client = MongoClient(**client_options)
+    client.admin.command("ping")
+
+    return client[config["mongo_database"]]
 
 def init_db():
     with db() as conn:
@@ -946,5 +968,5 @@ def status(sub_id):
 
 
 if __name__ == "__main__":
-    get_mongo_database()
+    get_global_mongo_database()
     app.run(host="127.0.0.1", port=5007, debug=True, threaded=True)
