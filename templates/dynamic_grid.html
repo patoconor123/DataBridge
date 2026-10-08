@@ -33,6 +33,10 @@ document.addEventListener("DOMContentLoaded", function() {
             }));
 
             $('#grid').DataTable({
+                searching: true,
+                paging: true,
+                ordering: true,
+                responsive: false,                            
                 data: data,
                 columns: columns,
                 pageLength: 25,
