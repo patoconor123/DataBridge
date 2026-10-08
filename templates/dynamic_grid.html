@@ -9,17 +9,6 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-    const allColumns = new Set();
-    data.forEach(row => {
-        Object.keys(row).forEach(key => {
-            allColumns.add(key);
-        });
-    });
-    const columns = Array.from(allColumns).map(key => ({
-        data: key,
-        title: key,
-        defaultContent: ""
-    }));            
 
     fetch(`/api/${collection}`)
         .then(response => response.json())
@@ -31,10 +20,17 @@ document.addEventListener("DOMContentLoaded", function() {
                 return;
             }
 
-            const columns = Object.keys(data[0]).map(key => ({
+            const allColumns = new Set();
+            data.forEach(row => {
+                Object.keys(row).forEach(key => {
+                    allColumns.add(key);
+                });
+            });
+            const columns = Array.from(allColumns).map(key => ({
                 data: key,
-                title: key
-            }));
+                title: key,
+                defaultContent: ""
+            })); 
 
             $('#grid').DataTable({
                 data: data,
