@@ -9,10 +9,13 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
+    const collection = "{{ collection_name }}";
 
     fetch(`/api/${collection}`)
         .then(response => response.json())
         .then(data => {
+
+            console.log(data);
 
             if (!data || data.length === 0) {
                 document.getElementById("grid").outerHTML =
@@ -21,16 +24,18 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
             const allColumns = new Set();
+
             data.forEach(row => {
                 Object.keys(row).forEach(key => {
                     allColumns.add(key);
                 });
             });
+
             const columns = Array.from(allColumns).map(key => ({
                 data: key,
                 title: key,
                 defaultContent: ""
-            })); 
+            }));
 
             $('#grid').DataTable({
                 data: data,
@@ -38,6 +43,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 pageLength: 25,
                 responsive: true
             });
+
         })
         .catch(error => {
             console.error("Error loading data:", error);
