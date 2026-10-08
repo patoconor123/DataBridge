@@ -19,10 +19,14 @@ body{
 }
 
 .grid-container {
-    max-width: 1200px;
-    overflow-x: auto;
+width: 100%;
+max-width: 100%;
+overflow-x: auto;
 }
-
+ 
+.grid-container table {
+width: 100% !important;
+}
 
 .connection-result pre{
     margin-top:10px;
