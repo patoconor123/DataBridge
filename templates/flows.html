@@ -7,7 +7,7 @@
     <div>
         <h1>Flows</h1>
         <p>
-            Configure reusable source and destination connections.
+            Configure a data flow by linking two connections.
         </p>
     </div>
 
@@ -17,54 +17,7 @@
     </a>
 
 </div>
-
-{% if flows %}
-
-<div class="grid">
-
-    {% for flow in flows %}
-
-    <div class="card">
-
-        <div class="row">
-
-            <h2>
-                {{ flow.name }}
-            </h2>
-
-            <span class="badge paused">
-                {{ flow.type }}
-            </span>
-
-        </div>
-
-        <p>
-            {{ flow.description }}
-        </p>
-
-        <small>
-            {{ flow.destination }}
-        </small>
-
-    </div>
-
-    {% endfor %}
-
-</div>
-
-{% else %}
-
-<div class="panel">
-
-    <h2>No Flows Found</h2>
-
-    <p>
-        No flows have been configured yet.
-    </p>
-
-
-</div>
-
-{% endif %}
+{% set collection_name = "flows" %}
+{% include "dynamic_grid.html" %}
 
 {% endblock %}
