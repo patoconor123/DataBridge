@@ -28,9 +28,6 @@ width: 100%;
 overflow-x: auto;
 }
  
-.dataTables_wrapper {
-width: 100%;
-}
 
 .connection-result pre{
     margin-top:10px;
@@ -42,11 +39,6 @@ width: 100%;
 #connectionsTable td {
 text-align: left;
 }
-
-table.dataTable {
-    width: 100% !important;
-}
-
 .dataTables_wrapper {
     width: 100%;
 }
