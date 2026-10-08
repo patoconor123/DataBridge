@@ -17,57 +17,6 @@
     </a>
 
 </div>
-
-{% if connections %}
-
-<div class="grid">
-
-    {% for connection in connections %}
-
-    <div class="card">
-
-        <div class="row">
-
-            <h2>
-                {{ connection.name }}
-            </h2>
-
-            <span class="badge paused">
-                {{ connection.type }}
-            </span>
-
-        </div>
-
-        <p>
-            {{ connection.description or 'No description provided.' }}
-        </p>
-
-        <small>
-            {{ connection.endpoint or '' }}
-        </small>
-
-    </div>
-
-    {% endfor %}
-
-</div>
-
-{% else %}
-
-<div class="panel">
-
-    <h2>No Connections Found</h2>
-
-    <p>
-        No connections have been configured yet.
-    </p>
-
-    /connections/new
-        Create First Connection
-    </a>
-
-</div>
-
-{% endif %}
+{% extends "dynamic_grid.html" %}
 
 {% endblock %}
