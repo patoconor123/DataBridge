@@ -19,7 +19,7 @@ body{
 }
 
 .grid-container {
-    max-width: 1150px;
+    max-width: 1200px;
     overflow-x: auto;
 }
 
@@ -62,7 +62,7 @@ table.dataTable {
 }
 
 .sidebar{
-    width:180px;
+    width:150px;
     min-height:100vh;
 
     position:sticky;
