@@ -9,7 +9,17 @@
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-    const collection = "{{ collection_name }}";
+    const allColumns = new Set();
+    data.forEach(row => {
+        Object.keys(row).forEach(key => {
+            allColumns.add(key);
+        });
+    });
+    const columns = Array.from(allColumns).map(key => ({
+        data: key,
+        title: key,
+        defaultContent: ""
+    }));            
 
     fetch(`/api/${collection}`)
         .then(response => response.json())
