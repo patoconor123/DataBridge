@@ -640,6 +640,14 @@ def duplicate(sub_id):
 
 @app.route("/grid/<collection_name>")
 def dynamic_grid(collection_name):
+
+    return render_template(
+        "dynamic_grid.html",
+        collection_name=collection_name
+    )
+
+@app.route("/grids/<collection_namesss>")
+def dynamic_grid(collection_name):
     global databridge_db
     collection = databridge_db[collection_name]
     rows = list(collection.find())
