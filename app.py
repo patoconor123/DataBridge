@@ -1053,11 +1053,6 @@ def delete(sub_id):
     return redirect(url_for("index"))
 
 
-@app.get("/api/subscriber/<sub_id>/logs")
-def logs(sub_id):
-    with locks.setdefault(sub_id, threading.Lock()):
-        return jsonify(log_buffers.get(sub_id, []))
-
 
 @app.get("/api/subscriber/<sub_id>/status")
 def status(sub_id):
