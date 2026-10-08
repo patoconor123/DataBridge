@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="title">
+
+    <div>
+        <h1>Runs</h1>
+        <p>
+            View Active/Historical Runs or create new Runs.
+        </p>
+    </div>
+
+    <a href="/runs/new"
+        class="button primary">
+        + Add
+    </a>
+
+</div>
+{% set collection_name = "runs" %}
+{% include "dynamic_grid.html" %}
+
+{% endblock %}
