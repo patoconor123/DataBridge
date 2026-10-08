@@ -645,7 +645,7 @@ def dynamic_grid(collection_name):
     rows = list(collection.find())
     return render_template(
     "dynamic_grid.html",
-    collection_name=collection_name
+    api_url=f"/api/{collection_name}"
     )
 
 @app.route("/flows")
