@@ -756,7 +756,7 @@ def connections():
 
     return render_template(
         "connections.html",
-        collection = "connections"
+        collection_name = "connections"
     )
 @app.route("/connections/new", methods=["GET", "POST"])
 def new_connection():
