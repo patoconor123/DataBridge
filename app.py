@@ -766,6 +766,15 @@ def runs():
         "runs.html",
         collection_name = "runs"
     )
+
+@app.route("/logs")
+def logs():
+
+    return render_template(
+        "logs.html",
+        collection_name = "logs"
+    )
+
 @app.route("/connections/new", methods=["GET", "POST"])
 def new_connection():
     if request.method == "GET":
