@@ -760,7 +760,7 @@ def connections():
     )
 
 @app.route("/runs")
-def connections():
+def runs():
 
     return render_template(
         "runs.html",
