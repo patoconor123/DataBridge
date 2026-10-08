@@ -19,6 +19,9 @@
     <div class="app-container
         
 <script src="{{ url_for('static', filename='jquery.min.js') }}"></script>
+        <script>
+console.log("jquery loaded?", typeof jQuery);
+</script>
 <script src="{{ url_for('static', filename='jquery.dataTables.min.js') }}"></script>
 <script src="{{ url_for('static', filename='dataTables.buttons.min.js')}}"></script>
 <script src="{{ url_for('static', filename ='buttons.colVis.min.js')}}"></script>
