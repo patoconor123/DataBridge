@@ -754,13 +754,9 @@ def connections():
     if "connections" not in db.list_collection_names():
         db.create_collection("connections")
 
-    connections = list(
-        db.connections.find().sort("name", 1)
-    )
-
     return render_template(
         "connections.html",
-        connections=connections
+        collection = "connections"
     )
 @app.route("/connections/new", methods=["GET", "POST"])
 def new_connection():
