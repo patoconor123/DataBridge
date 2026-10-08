@@ -638,6 +638,22 @@ def duplicate(sub_id):
         )
     )
 
+@app.route("/grid/<collection_name>")
+def dynamic_grid(collection_name):
+
+    collection = databridge_db[collection_name]
+
+    rows = list(collection.find())
+
+    for row in rows:
+        row["_id"] = str(row["_id"])
+
+    return render_template(
+        "dynamic_grid.html",
+        page_title=collection_name.title(),
+        rows=rows
+    )
+
 @app.route("/flows")
 def flows():
     global databridge_db
@@ -645,6 +661,11 @@ def flows():
     if "flows" not in db.list_collection_names():
         db.create_collection("flows")
     records = []
+    rows = list(db.flows.find())
+    for row in rows:
+    row["_id"] = str(row["_id"])
+    return jsonify(rows)
+    
     for doc in db.flows.find():
         doc["_id"] = str(doc["_id"])
         records.append(doc)
