@@ -18,6 +18,12 @@ body{
     border-radius:8px;
 }
 
+.grid-container {
+    max-width: 1200px;
+    overflow-x: auto;
+}
+
+
 .connection-result pre{
     margin-top:10px;
     white-space:pre-wrap;
