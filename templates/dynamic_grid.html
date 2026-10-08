@@ -1,4 +1,20 @@
-
+<link rel="stylesheet"
+      href="{{ url_for('static', filename='jquery.dataTables.min.css') }}">
+<script src="{{ url_for('static', filename='jquery-3.7.1.min.js') }}"></script>
+<script src="{{ url_for('static', filename='jquery.dataTables.min.js') }}"></script>
+<script>
+      $(document).ready(function () {
+            console.log("jQuery =", typeof $);
+          console.log("Table Count =", $('#connectionsTable').length);
+          console.log("DataTable =", typeof $.fn.DataTable );
+          $('#connectionsTable').DataTable({
+              pageLength: 10,
+              searching: true,
+              paging: true,
+              ordering: true
+    });
+});
+</script>
 <table id="grid" class="display" style="width:100%"></table>
 
 <script>
