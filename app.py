@@ -678,6 +678,7 @@ def flowsnew():
             f'Flow "{name}" saved successfully.',
             "success"
             )
+        return redirect(url_for("flows"))
 
 
 @app.route("/setup", methods=["GET", "POST"])
