@@ -1,15 +1,25 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <div class="title">
-    <h1>Connections</h1>
-    <p>Configure reusable source and destination connections.</p>
+
+    <div>
+        <h1>Connections</h1>
+        <p>
+            Configure reusable source and destination connections.
+        </p>
+    </div>
+
+    <a href="/connections/new"
+        class="button primary">
+        + Add
+    </a>
+
 </div>
 
-<div style="margin-bottom:15px;">
-    <a href="/connections/new" class="button primary">+ Add </a>
-</div>
+
+
+
 {% set collection_name = "connections" %}
 {% include "dynamic_grid.html" %}
 
