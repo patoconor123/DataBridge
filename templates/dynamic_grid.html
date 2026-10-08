@@ -2,25 +2,42 @@
 
 {% block content %}
 
+<h2>{{ collection_name|title }}</h2>
+
 <table id="grid" class="display" style="width:100%"></table>
 
 <script>
-fetch('{{ api_url }}')
-  .then(response => response.json())
-  .then(data => {
+document.addEventListener("DOMContentLoaded", function() {
 
-      const columns = Object.keys(data[0]).map(key => ({
-          data: key,
-          title: key
-      }));
+    const collection = "{{ collection_name }}";
 
-      $('#grid').DataTable({
-          data: data,
-          columns: columns,
-          pageLength: 25
-      });
+    fetch(`/api/${collection}`)
+        .then(response => response.json())
+        .then(data => {
 
-  });
+            if (!data || data.length === 0) {
+                document.getElementById("grid").outerHTML =
+                    "<p>No records found.</p>";
+                return;
+            }
+
+            const columns = Object.keys(data[0]).map(key => ({
+                data: key,
+                title: key
+            }));
+
+            $('#grid').DataTable({
+                data: data,
+                columns: columns,
+                pageLength: 25,
+                responsive: true
+            });
+        })
+        .catch(error => {
+            console.error("Error loading data:", error);
+        });
+
+});
 </script>
 
 {% endblock %}
