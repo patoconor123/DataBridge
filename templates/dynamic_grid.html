@@ -5,7 +5,7 @@
 <table id="grid" class="display" style="width:100%"></table>
 
 <script>
-fetch('/api/{{ collection_name }}')
+fetch('{{ api_url }}')
   .then(response => response.json())
   .then(data => {
 
