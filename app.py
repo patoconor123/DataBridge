@@ -701,6 +701,25 @@ def flowsnew():
             )
         return redirect(url_for("flows"))
 
+@app.route("/flows/start/<flow_id>", methods=["POST"])
+def start_flow(flow_id):
+
+    flows.update_one(
+        {"_id": ObjectId(flow_id)},
+        {"$set": {"status": "RUNNING"}}
+    )
+
+    return jsonify({"success": True})
+
+@app.route("/flows/stop/<flow_id>", methods=["POST"])
+def stop_flow(flow_id):
+
+    flows.update_one(
+        {"_id": ObjectId(flow_id)},
+        {"$set": {"status": "STOPPED"}}
+    )
+
+    return jsonify({"success": True})
 
 @app.route("/setup", methods=["GET", "POST"])
 def setup():
