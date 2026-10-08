@@ -16,11 +16,11 @@
     <div class="app-container">
         <script href="{{ url_for('static', filename='jquery.min.js') }}"></script>
 <link rel="stylesheet"
-      href="https://cdn.datatables.net/buttons/4.0.2/css/buttons.dataTables.min.css">
+      href="{{ url_for('static', filename='buttons.dataTables.min.css')}}">
 
-<script src="https://cdn.datatables.net/buttons/4.0.2/js/dataTables.buttons.min.js">
+<script href="{{ url_for('static', filename='dataTables.buttons.min.js')}}">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/datatables.net-buttons/4.0.2/js/buttons.colVis.min.js"></script>
+<script href="{{ url_for('static', filename ='buttons.colVis.min.js')}}"></script>
         <aside class="sidebar">
 
          <div class="logo">
