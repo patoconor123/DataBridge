@@ -662,9 +662,6 @@ def flows():
         db.create_collection("flows")
     records = []
     rows = list(db.flows.find())
-    for row in rows:
-    row["_id"] = str(row["_id"])
-    return jsonify(rows)
     
     for doc in db.flows.find():
         doc["_id"] = str(doc["_id"])
