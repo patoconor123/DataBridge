@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="title">
+
+    <div>
+        <h1>Logs</h1>
+        <p>
+            View log information for Runs.
+        </p>
+    </div>
+
+</div>
+{% set collection_name = "logs" %}
+{% include "dynamic_grid.html" %}
+
+{% endblock %}
