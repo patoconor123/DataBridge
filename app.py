@@ -646,6 +646,16 @@ def dynamic_grid(collection_name):
         collection_name=collection_name
     )
 
+@app.route("/api/<collection_name>")
+def api_collection(collection_name):
+
+    rows = list(databridge_db[collection_name].find())
+
+    for row in rows:
+        row["_id"] = str(row["_id"])
+
+    return jsonify(rows)
+
 @app.route("/grids/<collection_namesss>")
 def dynamic_grid(collection_name):
     global databridge_db
