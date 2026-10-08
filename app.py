@@ -665,17 +665,18 @@ def flowsnew():
     global databridge_db
     database = databridge_db
     flows_collection = database["flows"]
-    form_data = request.form()
-    name = parse_json_field(request.form.get("name"),"Request Body")
-    all_fields = dict(form_data) 
+    form_data = request.form
+    all_fields = form_data.to_dict()
+    name = all_fields.get("name", "")
     if action == "save":
-        
-        flows_collection.upsert_one(
-                all_fields
-            )
+        flows_collection.update_one(
+            {"name": name},
+            {"$set": all_fields},
+            upsert=True
+        )
         flash(
-                f'Flow "{name}" saved successfully.',
-                "success"
+            f'Flow "{name}" saved successfully.',
+            "success"
             )
 
 
