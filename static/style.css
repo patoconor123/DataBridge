@@ -18,14 +18,15 @@ body{
     border-radius:8px;
 }
 
+ 
 .grid-container {
 width: 100%;
-max-width: 100%;
 overflow-x: auto;
 }
  
-.grid-container table {
-width: 100% !important;
+.dataTables_wrapper {
+width: 100%;
+overflow-x: auto;
 }
 
 .connection-result pre{
